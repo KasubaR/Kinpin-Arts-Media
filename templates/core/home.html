@@ -1,0 +1,326 @@
+{% extends 'base_index.html' %}
+{% load static %}
+
+{% block title %}Kinpin Arts Media — Creative & Digital Agency{% endblock %}
+
+{% block content %}
+
+  <!-- HERO -->
+  <section class="hero-bg relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/3 w-[700px] h-[700px] hero-ring opacity-40 pointer-events-none"></div>
+    <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 w-[500px] h-[500px] hero-ring-2 opacity-30 pointer-events-none"></div>
+    <div class="hero-dot-grid absolute inset-0 pointer-events-none z-[1]"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 w-full py-20 lg:py-32">
+      <div class="max-w-3xl">
+        <div>
+          <h1 class="hero-headline text-white mb-6">
+            We Build<br/>
+            <em class="not-italic text-white">Brands</em><br/>
+            That Last.
+          </h1>
+
+          <p class="font-body text-lg text-white leading-relaxed max-w-md mb-10">
+            For over 7 years, Kinpin Arts Media has been turning bold visions into
+            unforgettable brand experiences — from identity design to web, motion, and beyond.
+          </p>
+
+          <div class="flex flex-wrap gap-4">
+            <a href="#services" class="hero-btn-primary btn-primary font-semibold px-8 py-3.5 rounded-full">
+              Explore Services
+            </a>
+            <a href="#works" class="hero-btn-outline btn-outline-light text-white font-semibold px-8 py-3.5 rounded-full">
+              Our Work ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="section-dark py-24 lg:py-36">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+      <div class="mb-16 reveal">
+        <div>
+          <h2 class="section-heading-tight font-display font-bold text-white">
+            Empowering Brands<br/>Through Design
+          </h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 min-[900px]:grid-cols-2 gap-5">
+        {% for service in services %}
+        <div
+          class="service-card rounded-2xl flex flex-col reveal {% if not service.image %}service-card--no-photo{% endif %}"
+          {% if service.image %}style="--card-bg: url('{{ service.image.url }}'); --reveal-delay: {% widthratio forloop.counter0 1 60 %}ms"{% else %}style="--reveal-delay: {% widthratio forloop.counter0 1 60 %}ms"{% endif %}
+        >
+          <div class="service-card-bg"></div>
+          <div class="service-card-overlay" aria-hidden="true"></div>
+          <div class="relative z-10 p-7 flex flex-col flex-1 justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-white/15 backdrop-blur-sm border border-white/25 flex items-center justify-center mb-5 text-2xl text-white shadow-sm">
+                {% if service.icon %}{{ service.icon }}{% else %}✦{% endif %}
+              </div>
+              <h3 class="font-display font-bold text-white text-lg mb-3">{{ service.title }}</h3>
+              <p class="font-body text-white/75 text-sm leading-relaxed mb-5">{{ service.short_description }}</p>
+              {% if service.features.exists %}
+              <div class="flex flex-wrap gap-2">
+                {% for tag in service.features.all %}
+                <span class="text-xs font-body text-white/90 bg-white/10 border border-white/15 rounded-full px-3 py-1">{{ tag.text }}</span>
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+            <a href="{% url 'service_detail' service.slug %}" class="mt-6 flex items-center gap-2 text-white text-sm font-display font-semibold group w-fit">
+              Get a Quote
+              <span class="transition-transform duration-200 group-hover:translate-x-1">→</span>
+            </a>
+          </div>
+        </div>
+        {% empty %}
+        <p class="font-body text-white/60">Services coming soon.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PROCESS -->
+  <section id="process" class="section-light py-24 lg:py-36">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+      <div class="text-center mb-16 reveal">
+        <h2 class="section-heading font-display font-bold text-white">
+          Our Creative Workflow
+        </h2>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        {% for step in process_steps %}
+        <div class="process-step-cell relative reveal" style="--reveal-delay: {% widthratio forloop.counter0 1 80 %}ms">
+          {% if not forloop.last %}
+          <div class="process-connector process-connector--on-gradient hidden lg:block absolute left-1/2 right-0 h-px z-0"></div>
+          {% endif %}
+          <div class="process-step">
+            <div class="process-step__num font-display font-bold text-white text-lg">
+              {% if forloop.counter < 10 %}0{% endif %}{{ forloop.counter }}
+            </div>
+            <h3 class="font-display font-bold text-white text-lg mb-3">{{ step.title }}</h3>
+            <p class="font-body text-white/75 text-sm leading-relaxed">{{ step.desc }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="mt-14 text-center">
+        <a href="#contact" class="process-cta btn-primary inline-block text-white font-semibold px-8 py-3.5 rounded-full">
+          Schedule a Consultation
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PORTFOLIO -->
+  <section id="works" class="section-dark section-works py-24 lg:py-36">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 reveal">
+        <div>
+          <div class="text-crimson text-sm font-display font-semibold uppercase tracking-widest mb-4">Selected Works</div>
+          <h2 class="section-heading font-display font-bold text-white">
+            Elevating Brands<br/>With Design
+          </h2>
+        </div>
+        <a href="https://www.behance.net/KinpinArts" target="_blank" rel="noopener noreferrer"
+           class="btn-outline-light text-white font-semibold px-7 py-3 rounded-full text-sm flex-shrink-0">
+          View All Work ↗
+        </a>
+      </div>
+
+      {% if projects %}
+      <div class="flex flex-wrap gap-3 mb-10 reveal">
+        {% for tab in portfolio_tabs %}
+        <button type="button" data-portfolio-tab="{{ tab }}"
+                class="portfolio-tab-btn font-body text-sm px-5 py-2 rounded-full border transition-all duration-200 cursor-pointer {% if tab == 'All' %}is-active bg-crimson border-crimson text-white font-medium{% else %}border-white/20 text-white/50 hover:border-crimson/40 hover:text-white/80{% endif %}">
+          {{ tab }}
+        </button>
+        {% endfor %}
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for project in projects %}
+        <a href="{% url 'portfolio_detail' project.slug %}"
+           data-portfolio-item
+           data-categories="{% for cat in project.categories.all %}{{ cat.name }}{% if not forloop.last %}|{% endif %}{% endfor %}"
+           class="portfolio-item rounded-xl reveal {% if forloop.first %}col-span-2 row-span-1{% endif %}"
+           style="{% if forloop.first %}--item-aspect: 2 / 1;{% else %}--item-aspect: 1 / 1;{% endif %} --reveal-delay: {% widthratio forloop.counter0 1 60 %}ms; --thumb-bg: url('{{ project.thumbnail.url }}')"
+        >
+          <div class="portfolio-thumb rounded-xl"></div>
+          <div class="portfolio-overlay rounded-xl">
+            <div>
+              <div class="flex gap-2 mb-2 flex-wrap">
+                {% for cat in project.categories.all %}
+                <span class="text-xs font-body text-crimson bg-crimson/20 rounded-full px-2 py-0.5">{{ cat.name }}</span>
+                {% endfor %}
+              </div>
+              <div class="font-display font-bold text-white text-base">{{ project.title }}</div>
+              <div class="text-white/50 text-xs font-body">{{ project.created_at.year }}</div>
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="empty-state reveal">
+        <p class="empty-state__glyph font-display" aria-hidden="true">◌</p>
+        <p class="empty-state__title font-display">Portfolio projects will appear here once added in the admin.</p>
+        <p class="empty-state__hint font-body">
+          Browse <a href="{% url 'portfolio' %}">all work</a>
+          or <a href="{% url 'home' %}#contact">get in touch</a>.
+        </p>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- STATS + CLIENTS -->
+  <section id="stats-clients" class="section-light py-20 lg:py-24">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4">
+        {% for stat in stats %}
+        <div class="text-center reveal" style="--reveal-delay: {% widthratio forloop.counter0 1 80 %}ms">
+          <div class="stat-num stats-clients__value">{{ stat.value }}</div>
+          <div class="font-display font-semibold text-white mt-2 text-sm">{{ stat.label }}</div>
+          <div class="font-body text-white/90 text-xs mt-1">{{ stat.sub }}</div>
+        </div>
+        {% endfor %}
+      </div>
+
+      {% if clients %}
+      <div class="mt-16 lg:mt-20 pt-16 lg:pt-20 border-t border-white/10">
+        <div class="text-center mb-12 reveal">
+          <p class="font-body text-white text-base">Trusted by businesses across Zambia and beyond</p>
+        </div>
+
+        <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-8 items-center reveal">
+          {% for client in clients %}
+          <div class="flex items-center justify-center h-14 px-2">
+            {% if client.website %}
+            <a href="{{ client.website }}" target="_blank" rel="noopener noreferrer" class="block max-h-12 w-full">
+              <img src="{{ client.logo.url }}" alt="{{ client.name }}" class="client-logo max-h-12 w-auto mx-auto object-contain" />
+            </a>
+            {% else %}
+            <img src="{{ client.logo.url }}" alt="{{ client.name }}" class="client-logo max-h-12 w-auto mx-auto object-contain" />
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- TESTIMONIALS + NEWSLETTER -->
+  <section id="testimonials" class="section-dark section-newsletter py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+      {% if testimonial_cards %}
+      <div class="text-center mb-16 reveal">
+        <h2 class="section-heading font-display font-bold text-white">
+          What Our Clients Say
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        {% for t in testimonial_cards %}
+        <div class="testimonial-card rounded-2xl p-8 reveal" style="--reveal-delay: {% widthratio forloop.counter0 1 100 %}ms">
+          <div class="testimonial-quote-mark text-6xl font-display font-black leading-none mb-4">"</div>
+          <p class="font-body text-white/80 text-base leading-relaxed mb-7 italic">{{ t.quote }}</p>
+          <div class="flex items-center gap-4">
+            <div class="w-11 h-11 rounded-full grad-bg flex items-center justify-center font-display font-bold text-white text-sm flex-shrink-0">
+              {{ t.initials }}
+            </div>
+            <div>
+              <div class="font-display font-semibold text-white text-sm">{{ t.name }}</div>
+              {% if t.title %}
+              <div class="font-body text-white/50 text-xs">{{ t.title }}</div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="max-w-2xl mx-auto px-6 text-center mt-16 lg:mt-20 pt-16 lg:pt-20 border-t border-white/10 reveal">
+      <h3 class="newsletter-heading font-display font-bold text-white text-3xl lg:text-4xl mb-4">
+        Get Design Insights<br/>Delivered to You
+      </h3>
+      <p class="font-body text-white/50 mb-8">Brand tips, project showcases, and agency updates — straight to your inbox.</p>
+      <form method="post" action="{% url 'newsletter_subscribe' %}" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+        {% csrf_token %}
+        <input type="email" name="email" placeholder="your@email.com" required
+               class="flex-1 px-5 py-3.5 rounded-full font-body text-sm bg-white/5 border border-white/15 text-white placeholder-white/30 focus:outline-none focus:border-crimson/60 transition-colors" />
+        <button type="submit" class="btn-primary text-white font-semibold px-7 py-3.5 rounded-full text-sm whitespace-nowrap shadow-sm">
+          Subscribe →
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section-dark py-24 lg:py-36 relative overflow-hidden">
+    <div class="absolute inset-0 grad-bg opacity-95 z-0"></div>
+    <div class="contact-pattern absolute inset-0 pointer-events-none z-[1]" aria-hidden="true"></div>
+    <div class="contact-glow absolute inset-0 z-[2]"></div>
+    <div class="contact-dot-grid absolute inset-0 pointer-events-none z-[3]"></div>
+
+    <div class="relative z-[10] max-w-4xl mx-auto px-6 lg:px-10 text-center">
+      <h2 class="contact-hero-title font-display font-black text-white mb-6">
+        Let's Build Something<br/>Extraordinary.
+      </h2>
+      <p class="font-body text-white/70 text-lg mb-10 max-w-lg mx-auto">
+        Tell us about your project and we'll get back to you within 24 hours.
+      </p>
+
+      <form method="post" action="{% url 'home' %}" class="max-w-xl mx-auto space-y-4 text-left">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="contact" />
+        <div class="grid sm:grid-cols-2 gap-4">
+          <input name="name" type="text" placeholder="Your Name" required
+                 class="w-full px-5 py-4 rounded-xl font-body text-sm bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white/50 transition-colors" />
+          <input name="email" type="email" placeholder="Email Address" required
+                 class="w-full px-5 py-4 rounded-xl font-body text-sm bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white/50 transition-colors" />
+        </div>
+        <select name="service"
+                class="w-full px-5 py-4 rounded-xl font-body text-sm bg-white/10 border border-white/20 text-white focus:outline-none focus:border-white/50 transition-colors appearance-none cursor-pointer">
+          <option value="" disabled selected>Service of Interest</option>
+          {% for s in services %}
+          <option value="{{ s.title }}">{{ s.title }}</option>
+          {% endfor %}
+        </select>
+        <textarea name="message" placeholder="Tell us about your project..." rows="4" required
+                  class="w-full px-5 py-4 rounded-xl font-body text-sm bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white/50 transition-colors resize-none"></textarea>
+        <button type="submit" class="w-full bg-white text-plum font-display font-bold py-4 rounded-xl text-base hover:bg-white/90 transition-all duration-200">
+          Send Message →
+        </button>
+      </form>
+
+      <div class="mt-10 text-white/50 font-body text-sm">
+        Or email us directly at
+        <a href="mailto:info@kinpinarts.com" class="text-white underline hover:text-white/80">info@kinpinarts.com</a>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

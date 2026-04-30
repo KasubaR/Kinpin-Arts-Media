@@ -1,0 +1,470 @@
+:root {
+  --crimson: #dd1c49;
+  --plum:    #331437;
+  --ink:     #0d0610;
+  --grad:    linear-gradient(135deg, #dd1c49 0%, #331437 100%);
+  --grad-r:  linear-gradient(135deg, #331437 0%, #dd1c49 100%);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Helvena', system-ui, sans-serif;
+  background: #0d0610;
+  color: #f5f0f6;
+  overflow-x: hidden;
+}
+
+/* ── GRAIN OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── GRADIENT TEXT ── */
+.grad-text {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── GRADIENT BG ── */
+.grad-bg { background: var(--grad); }
+.grad-bg-r { background: var(--grad-r); }
+
+/* ── NAV ── */
+.nav-inner {
+  height: 72px;
+}
+
+.nav-blur {
+  background: rgba(13, 6, 16, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(221,28,73,0.15);
+}
+
+/* Hero dot grid (masked) */
+.hero-dot-grid {
+  background-image: radial-gradient(rgba(221, 28, 73, 0.15) 1px, transparent 1px);
+  background-size: 48px 48px;
+  -webkit-mask-image: radial-gradient(ellipse 60% 80% at 80% 50%, black, transparent);
+  mask-image: radial-gradient(ellipse 60% 80% at 80% 50%, black, transparent);
+}
+
+/* ── HERO (matches hero-demo/gradient-hero: plum → crimson + pattern multiply) ── */
+.hero-bg {
+  background-color: #341238;
+  background-image: linear-gradient(180deg, #341238 0%, #de0a47 100%);
+  background-repeat: no-repeat;
+}
+
+.hero-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('../hero-demo/assets/pattern.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 1;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-ring {
+  z-index: 1;
+  border: 1px solid rgba(221,28,73,0.25);
+  border-radius: 50%;
+  animation: spin-slow 28s linear infinite;
+}
+.hero-ring-2 {
+  z-index: 1;
+  border: 1px solid rgba(51,20,55,0.6);
+  border-radius: 50%;
+  animation: spin-slow 20s linear infinite reverse;
+}
+
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+
+/* Hero CTAs: high contrast on gradient + pattern */
+.hero-bg .hero-btn-primary {
+  background: #ffffff;
+  color: #341238;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.hero-bg .hero-btn-primary:hover {
+  background: #f5f0f6;
+  color: #2a0e2e;
+  filter: none;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.4);
+}
+
+.hero-bg .hero-btn-outline {
+  border-width: 2px;
+  border-color: rgba(255, 255, 255, 0.95);
+  background: rgba(13, 6, 16, 0.45);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+}
+
+.hero-bg .hero-btn-outline:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: #ffffff;
+  filter: none;
+}
+
+/* ── SERVICE CARD (photo background) ── */
+.service-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 320px;
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.service-card-bg {
+  position: absolute;
+  inset: 0;
+  background-image: var(--card-bg, none);
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.service-card:hover .service-card-bg {
+  transform: scale(1.06);
+}
+.service-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    165deg,
+    rgba(221, 28, 73, 0.32) 0%,
+    rgba(51, 20, 55, 0.45) 42%,
+    rgba(13, 6, 16, 0.9) 100%
+  );
+  pointer-events: none;
+}
+.service-card:hover {
+  border-color: rgba(221, 28, 73, 0.45);
+  transform: translateY(-4px);
+  box-shadow: 0 24px 56px rgba(13, 6, 16, 0.55);
+}
+@media (prefers-reduced-motion: reduce) {
+  .service-card:hover .service-card-bg { transform: none; }
+}
+
+/* ── SECTION TYPOGRAPHY ── */
+.section-heading {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  letter-spacing: -0.02em;
+}
+
+.section-heading-tight {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+/* Alternating page sections (after hero) */
+.section-dark {
+  background-color: #0d0610;
+  color: #f5f0f6;
+}
+
+.section-dark.section-works {
+  background-color: #0d0610;
+  background-image: linear-gradient(
+    180deg,
+    rgba(51, 20, 55, 0.14) 0%,
+    rgba(51, 20, 55, 0.22) 100%
+  );
+}
+
+.section-dark.section-newsletter {
+  background-color: #0d0610;
+  background-image: linear-gradient(
+    180deg,
+    rgba(51, 20, 55, 0.18) 0%,
+    rgba(51, 20, 55, 0.3) 100%
+  );
+}
+
+/* Same stack as #contact “Ready to Begin?”: grad + glow + dot grid */
+.section-light {
+  position: relative;
+  overflow: hidden;
+  color: #f5f0f6;
+  background-color: #331437;
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    radial-gradient(ellipse 60% 80% at 20% 50%, rgba(255, 255, 255, 0.06) 0%, transparent 60%),
+    linear-gradient(135deg, rgba(221, 28, 73, 0.95) 0%, rgba(51, 20, 55, 0.95) 100%);
+  background-size: 32px 32px, auto, auto;
+  background-position: 0 0, center, center;
+  background-repeat: repeat, no-repeat, no-repeat;
+}
+
+.section-light + .divider {
+  background: linear-gradient(90deg, transparent, rgba(221, 28, 73, 0.3), transparent);
+}
+
+.newsletter-heading {
+  letter-spacing: -0.02em;
+}
+
+/* ── PROCESS ── */
+.process-connector {
+  background: linear-gradient(90deg, rgba(221, 28, 73, 0.4) 0%, rgba(221, 28, 73, 0.05) 100%);
+  transform: translateX(50%);
+}
+
+/* How We Work (#process): glass panels + line + CTA aligned with section-light gradient */
+#process .process-step-cell {
+  z-index: 1;
+}
+
+#process .process-connector--on-gradient {
+  top: 3rem;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(221, 28, 73, 0.5) 50%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+}
+
+#process .process-step {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  padding: 1.5rem 1.35rem;
+  border-radius: 1rem;
+  background: rgba(13, 6, 16, 0.38);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+}
+
+#process .process-step__num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 1.25rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+#process .process-cta {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.22);
+}
+
+#process .process-cta:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.28);
+  filter: none;
+}
+
+/* ── PROCESS STEP ── */
+.process-line::after {
+  content: '';
+  position: absolute;
+  top: 24px;
+  left: 48px;
+  right: -48px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(221,28,73,0.4), transparent);
+}
+
+/* ── STAT NUMBER ── */
+.stat-num {
+  font-family: 'Helvena', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1;
+}
+
+/* Stats + clients: gradient bg matches grad-text — use solid white + shadow for contrast */
+#stats-clients .stats-clients__value {
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.5);
+}
+
+/* ── TESTIMONIAL ── */
+.testimonial-card {
+  background: rgba(51,20,55,0.3);
+  border: 1px solid rgba(221,28,73,0.12);
+  transition: border-color 0.3s;
+}
+.testimonial-card:hover { border-color: rgba(221,28,73,0.4); }
+
+.testimonial-quote-mark {
+  color: rgba(221, 28, 73, 0.3);
+}
+
+/* ── PORTFOLIO ITEM ── */
+.portfolio-item {
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: var(--item-aspect, 1 / 1);
+}
+.portfolio-thumb {
+  background-image: var(--thumb-bg, none);
+  transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+.portfolio-item:hover .portfolio-thumb { transform: scale(1.06); }
+.portfolio-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(13,6,16,0.9) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  display: flex;
+  align-items: flex-end;
+  padding: 1.5rem;
+}
+.portfolio-item:hover .portfolio-overlay { opacity: 1; }
+
+/* ── CTA BUTTONS (match demo2.html) ── */
+.btn-primary {
+  background: linear-gradient(105deg, #E11D48, #BE185D);
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 20px -6px rgba(225, 29, 72, 0.3);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 28px -8px rgba(225, 29, 72, 0.4);
+  filter: brightness(1.02);
+}
+.btn-outline-light {
+  border: 1.5px solid #E11D48;
+  background: transparent;
+  transition: all 0.2s;
+}
+.btn-outline-light:hover {
+  background: rgba(225, 29, 72, 0.08);
+  border-color: #BE185D;
+}
+
+/* ── MOBILE MENU ── */
+/* Absolutely positioned so closed state does not expand <nav> height — otherwise nav-blur covers a tall strip always */
+.mobile-menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  z-index: 40;
+  background: rgba(13,6,16,0.97);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  transform-origin: top;
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s cubic-bezier(0.4,0,0.2,1), visibility 0.3s;
+}
+.mobile-menu.closed {
+  transform: scaleY(0);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.mobile-menu.open {
+  transform: scaleY(1);
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.7s ease var(--reveal-delay, 0ms),
+    transform 0.7s cubic-bezier(0.4, 0, 0.2, 1) var(--reveal-delay, 0ms);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── DIVIDER ── */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(221,28,73,0.3), transparent);
+}
+
+/* ── CLIENT LOGO PLACEHOLDER ── */
+.client-logo {
+  filter: brightness(0) invert(1);
+  opacity: 0.45;
+  transition: opacity 0.3s;
+}
+.client-logo:hover { opacity: 0.85; }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #0d0610; }
+::-webkit-scrollbar-thumb { background: var(--grad); border-radius: 2px; }
+
+/* ── HERO HEADLINE ── */
+.hero-headline {
+  font-family: 'Helvena', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.8rem, 8vw, 7rem);
+  line-height: 0.96;
+  letter-spacing: -0.02em;
+}
+
+/* ── CONTACT CTA SECTION ── */
+.contact-pattern {
+  background-image: url('../hero-demo/assets/pattern.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.45;
+  mix-blend-mode: multiply;
+}
+
+.contact-glow {
+  background: radial-gradient(ellipse 60% 80% at 20% 50%, rgba(255, 255, 255, 0.06) 0%, transparent 60%);
+}
+
+.contact-dot-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.contact-hero-title {
+  font-size: clamp(2.5rem, 7vw, 5.5rem);
+  line-height: 0.96;
+  letter-spacing: -0.03em;
+}
+
+/* ── FOOTER ── */
+.site-footer {
+  background: #080411;
+}

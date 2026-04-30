@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services — Kinpin Arts Media</title>
+  <meta name="description" content="Explore Kinpin Arts Media's full range of creative services: brand identity, web design, event branding, social media, motion graphics, photography, print design, digital marketing, and consulting." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+  <link rel="stylesheet" href="css/fonts.css" />
+  <link rel="stylesheet" href="css/index.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Helvena', 'system-ui', 'sans-serif'],
+            body:    ['Helvena', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            crimson: '#dd1c49',
+            plum:    '#331437',
+            ink:     '#0d0610',
+            ash:     '#f5f0f6',
+            mist:    '#e8dff0',
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    /* ── PAGE-LEVEL ADDITIONS ── */
+
+    /* Hero page banner */
+    .page-hero {
+      background-color: #341238;
+      background-image: linear-gradient(160deg, #341238 0%, #de0a47 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('hero-demo/assets/pattern.svg');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.9;
+      mix-blend-mode: multiply;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Breadcrumb pill */
+    .breadcrumb-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 9999px;
+      padding: 0.35rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+      backdrop-filter: blur(8px);
+      letter-spacing: 0.03em;
+    }
+    .breadcrumb-pill .sep { opacity: 0.5; }
+
+    /* Service anchor cards (full-width sections) */
+    .service-anchor {
+      scroll-margin-top: 88px;
+    }
+
+    /* Service detail block */
+    .service-block {
+      position: relative;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(51,20,55,0.18);
+      transition: border-color 0.35s ease;
+    }
+    .service-block:hover {
+      border-color: rgba(221,28,73,0.28);
+    }
+    .service-block-img {
+      position: relative;
+      overflow: hidden;
+    }
+    .service-block-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.65s cubic-bezier(0.25,0.46,0.45,0.94);
+      display: block;
+    }
+    .service-block:hover .service-block-img img {
+      transform: scale(1.04);
+    }
+    .service-block-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(221,28,73,0.22) 0%, rgba(51,20,55,0.5) 100%);
+      pointer-events: none;
+    }
+
+    /* Service icon badge */
+    .service-icon-badge {
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: 1rem;
+      background: var(--grad);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: #fff;
+      flex-shrink: 0;
+      box-shadow: 0 8px 24px rgba(221,28,73,0.35);
+    }
+
+    /* Feature bullet */
+    .feat-bullet {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.875rem;
+      color: rgba(245,240,246,0.8);
+      line-height: 1.5;
+    }
+    .feat-bullet::before {
+      content: '';
+      flex-shrink: 0;
+      width: 5px;
+      height: 5px;
+      border-radius: 9999px;
+      background: var(--crimson);
+      margin-top: 0.45rem;
+    }
+
+    /* Service number decoration */
+    .service-num {
+      font-family: 'Helvena', system-ui, sans-serif;
+      font-weight: 800;
+      font-size: clamp(5rem, 14vw, 9rem);
+      line-height: 1;
+      color: rgba(221,28,73,0.07);
+      letter-spacing: -0.04em;
+      pointer-events: none;
+      user-select: none;
+      position: absolute;
+    }
+
+    /* Quick-nav sidebar sticky */
+    .quick-nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: rgba(245,240,246,0.45);
+      transition: color 0.2s, padding-left 0.2s;
+      padding: 0.35rem 0;
+      text-decoration: none;
+    }
+    .quick-nav-link::before {
+      content: '';
+      width: 20px;
+      height: 1px;
+      background: currentColor;
+      flex-shrink: 0;
+      transition: width 0.2s, background 0.2s;
+    }
+    .quick-nav-link:hover,
+    .quick-nav-link.active {
+      color: #dd1c49;
+    }
+    .quick-nav-link:hover::before,
+    .quick-nav-link.active::before {
+      width: 32px;
+      background: #dd1c49;
+    }
+
+    /* CTA banner (mid-page) */
+    .mid-cta {
+      background: var(--grad);
+      border-radius: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .mid-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+
+    /* Tag chips */
+    .chip {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: rgba(245,240,246,0.8);
+      background: rgba(221,28,73,0.12);
+      border: 1px solid rgba(221,28,73,0.22);
+      border-radius: 9999px;
+      padding: 0.25rem 0.75rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .chip:hover {
+      background: rgba(221,28,73,0.22);
+      border-color: rgba(221,28,73,0.4);
+    }
+
+    /* Special link highlight */
+    .web-sub-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #dd1c49;
+      border: 1px solid rgba(221,28,73,0.3);
+      border-radius: 9999px;
+      padding: 0.35rem 0.9rem;
+      background: rgba(221,28,73,0.06);
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+      text-decoration: none;
+    }
+    .web-sub-link:hover {
+      background: rgba(221,28,73,0.14);
+      border-color: rgba(221,28,73,0.5);
+      transform: translateX(2px);
+    }
+
+    /* Alternating layout helpers */
+    .layout-img-right .service-block-img { order: 1; }
+    .layout-img-right .service-block-content { order: 0; }
+    @media (min-width: 1024px) {
+      .layout-img-left .service-block-img   { order: 0; }
+      .layout-img-left .service-block-content { order: 1; }
+      .layout-img-right .service-block-img  { order: 1; }
+      .layout-img-right .service-block-content { order: 0; }
+    }
+
+    /* Services quick-jump grid */
+    .jump-card {
+      position: relative;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 1rem;
+      background: rgba(51,20,55,0.22);
+      padding: 1.25rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.3s, background 0.3s, transform 0.3s;
+      text-decoration: none;
+      display: block;
+    }
+    .jump-card:hover {
+      border-color: rgba(221,28,73,0.4);
+      background: rgba(221,28,73,0.08);
+      transform: translateY(-3px);
+    }
+    .jump-card-icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .jump-card-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: rgba(245,240,246,0.8);
+      letter-spacing: 0.01em;
+      line-height: 1.3;
+    }
+  </style>
+</head>
+
+<body>
+<div id="app">
+
+  <!-- ═══════════════════════ NAV (same as index) ═══════════════════════ -->
+  <nav class="nav-blur fixed top-0 left-0 right-0 z-50">
+    <div class="nav-inner max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between">
+
+      <a href="index.html" class="flex items-center group shrink-0">
+        <img src="logo.svg" alt="Kinpin Arts" width="280" height="56" class="h-14 w-auto max-w-[min(280px,52vw)] object-contain object-left" />
+      </a>
+
+      <ul class="hidden lg:flex items-center gap-8 font-body text-sm font-medium text-white/70">
+        <li v-for="link in navLinks" :key="link.label">
+          <a :href="link.href"
+             :class="link.label === 'Services' ? 'text-white' : ''"
+             class="hover:text-white transition-colors duration-200 relative group">
+            {{ link.label }}
+            <span class="absolute -bottom-1 left-0 h-px grad-bg transition-all duration-300 group-hover:w-full"
+                  :class="link.label === 'Services' ? 'w-full' : 'w-0'"></span>
+          </a>
+        </li>
+      </ul>
+
+      <a href="#contact" class="hidden lg:inline-flex btn-primary text-white text-sm font-semibold px-6 py-2.5 rounded-full shadow-md cursor-pointer">
+        Start a Project
+      </a>
+
+      <button @click="menuOpen = !menuOpen" class="lg:hidden w-10 h-10 flex flex-col justify-center items-center gap-1.5 group">
+        <span class="block h-0.5 w-6 transition-all duration-300" :class="menuOpen ? 'bg-crimson rotate-45 translate-y-2' : 'bg-white'"></span>
+        <span class="block h-0.5 w-6 bg-white transition-all duration-300" :class="menuOpen ? 'opacity-0' : 'opacity-100'"></span>
+        <span class="block h-0.5 w-6 transition-all duration-300" :class="menuOpen ? 'bg-crimson -rotate-45 -translate-y-2' : 'bg-white'"></span>
+      </button>
+    </div>
+
+    <div class="mobile-menu lg:hidden" :class="menuOpen ? 'open' : 'closed'">
+      <div class="px-6 py-8 flex flex-col gap-6">
+        <a v-for="link in navLinks" :key="link.label" :href="link.href" @click="menuOpen=false"
+           class="font-display text-2xl font-bold text-white hover:grad-text transition-colors">
+          {{ link.label }}
+        </a>
+        <a href="#contact" class="btn-primary text-white text-center font-semibold py-3 rounded-full mt-2" @click="menuOpen=false">
+          Start a Project
+        </a>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ═══════════════════════ PAGE HERO BANNER ═══════════════════════ -->
+  <section class="page-hero pt-28 pb-20 lg:pt-36 lg:pb-28">
+    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
+
+      <!-- Breadcrumb -->
+      <div class="mb-8">
+        <span class="breadcrumb-pill">
+          <a href="index.html" class="hover:text-white transition-colors">Home</a>
+          <span class="sep">/</span>
+          <span>Services</span>
+        </span>
+      </div>
+
+      <div class="max-w-3xl">
+        <p class="text-white/60 text-sm font-semibold tracking-widest uppercase mb-4">What We Do</p>
+        <h1 class="hero-headline text-white mb-6">
+          Creative Services<br/>
+          <em class="not-italic">Built to Grow</em><br/>
+          Your Brand.
+        </h1>
+        <p class="font-body text-white/80 text-lg leading-relaxed max-w-xl mb-10">
+          From a powerful first logo to a full digital ecosystem — we offer end-to-end creative solutions that help Zambian and African businesses stand out, connect, and convert.
+        </p>
+        <a href="#all-services" class="hero-btn-primary btn-primary text-white font-semibold px-8 py-3.5 rounded-full cursor-pointer inline-block">
+          Explore All Services ↓
+        </a>
+      </div>
+    </div>
+
+    <!-- Decorative rings -->
+    <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/3 w-[600px] h-[600px] hero-ring opacity-30 pointer-events-none"></div>
+    <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 w-[420px] h-[420px] hero-ring-2 opacity-20 pointer-events-none"></div>
+  </section>
+
+
+  <!-- ═══════════════════════ QUICK-JUMP GRID ═══════════════════════ -->
+  <section id="all-services" class="section-dark py-16">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+      <p class="text-white/40 text-xs font-semibold tracking-widest uppercase mb-8">Jump to a service</p>
+
+      <div class="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-3">
+        <a v-for="s in services" :key="s.id" :href="'#' + s.id" class="jump-card reveal">
+          <span class="jump-card-icon">{{ s.icon }}</span>
+          <span class="jump-card-label">{{ s.shortLabel }}</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+
+  <!-- ═══════════════════════ SERVICE BLOCKS ═══════════════════════ -->
+  <section class="section-dark py-0">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+      <template v-for="(s, idx) in services" :key="s.id">
+
+        <!-- Service section -->
+        <div :id="s.id" class="service-anchor py-20 lg:py-28">
+
+          <!-- Big watermark number -->
+          <div class="relative">
+            <span class="service-num select-none" style="top:-2rem; right: 0">{{ String(idx+1).padStart(2,'0') }}</span>
+          </div>
+
+          <div
+            class="service-block reveal"
+            :class="idx % 2 === 0 ? 'layout-img-left' : 'layout-img-right'"
+          >
+            <div class="grid lg:grid-cols-2 min-h-[480px]">
+
+              <!-- Image -->
+              <div class="service-block-img min-h-[280px] lg:min-h-0">
+                <img :src="s.image" :alt="s.title" loading="lazy" />
+              </div>
+
+              <!-- Content -->
+              <div class="service-block-content p-8 lg:p-12 flex flex-col justify-between">
+                <div>
+                  <!-- Header -->
+                  <div class="flex items-start gap-4 mb-6">
+                    <div class="service-icon-badge">{{ s.icon }}</div>
+                    <div>
+                      <p class="text-crimson text-xs font-semibold tracking-widest uppercase mb-1">{{ s.category }}</p>
+                      <h2 class="font-display font-bold text-white text-2xl lg:text-3xl leading-tight">{{ s.title }}</h2>
+                    </div>
+                  </div>
+
+                  <!-- Description -->
+                  <p class="font-body text-white/70 text-sm leading-relaxed mb-6">{{ s.desc }}</p>
+
+                  <!-- Features -->
+                  <div class="grid sm:grid-cols-2 gap-2 mb-6">
+                    <div v-for="feat in s.features" :key="feat" class="feat-bullet">{{ feat }}</div>
+                  </div>
+
+                  <!-- Tags -->
+                  <div class="flex flex-wrap gap-2 mb-7">
+                    <span v-for="tag in s.tags" :key="tag" class="chip">{{ tag }}</span>
+                  </div>
+
+                  <!-- Special note (e.g. web sub-page link) -->
+                  <div v-if="s.subLink" class="mb-6">
+                    <a :href="s.subLink.href" class="web-sub-link">
+                      <span>{{ s.subLink.label }}</span>
+                      <span>→</span>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- CTA -->
+                <div class="flex flex-wrap gap-3">
+                  <a
+                    :href="'#contact?service=' + encodeURIComponent(s.title)"
+                    class="btn-primary text-white text-sm font-semibold px-6 py-2.5 rounded-full inline-flex items-center gap-2 group"
+                  >
+                    Get a Quote
+                    <span class="transition-transform duration-200 group-hover:translate-x-1">→</span>
+                  </a>
+                  <a href="#contact" class="btn-outline-light text-white text-sm font-semibold px-6 py-2.5 rounded-full">
+                    Discuss Your Project
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Mid-page CTA after service 4 -->
+        <div v-if="idx === 3" class="mid-cta p-10 lg:p-14 text-center my-4 reveal">
+          <p class="text-white/60 text-xs font-semibold tracking-widest uppercase mb-3">Ready to get started?</p>
+          <h3 class="font-display font-bold text-white text-2xl lg:text-4xl mb-4 leading-tight">
+            Not sure which service fits your needs?
+          </h3>
+          <p class="text-white/75 text-sm max-w-md mx-auto mb-8">
+            Book a free 30-minute discovery call. We'll listen, assess, and recommend the right creative direction for your brand.
+          </p>
+          <a href="#contact" class="inline-flex items-center gap-2 bg-white text-plum font-semibold text-sm px-8 py-3.5 rounded-full hover:-translate-y-1 transition-transform shadow-xl">
+            Book a Free Consultation →
+          </a>
+        </div>
+
+        <div v-if="idx < services.length - 1" class="divider"></div>
+
+      </template>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════ PROCESS ═══════════════════════ -->
+  <div class="divider"></div>
+  <section id="process" class="section-light py-24 lg:py-36">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+      <div class="text-center mb-16 reveal">
+        <p class="text-white/60 text-xs font-semibold tracking-widest uppercase mb-3">How It Works</p>
+        <h2 class="section-heading font-display font-bold text-white">Our Creative Workflow</h2>
+        <p class="text-white/65 text-sm mt-4 max-w-lg mx-auto">Every project follows a proven process designed to deliver results — efficiently, creatively, and on time.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div v-for="(step, i) in process" :key="step.title" class="process-step-cell relative reveal" :style="{ '--reveal-delay': (i * 80) + 'ms' }">
+          <div v-if="i < process.length - 1" class="process-connector process-connector--on-gradient hidden lg:block absolute left-1/2 right-0 h-px z-0"></div>
+          <div class="process-step">
+            <div class="process-step__num font-display font-bold text-white text-lg">{{ String(i+1).padStart(2,'0') }}</div>
+            <h3 class="font-display font-bold text-white text-lg mb-3">{{ step.title }}</h3>
+            <p class="font-body text-white/75 text-sm leading-relaxed">{{ step.desc }}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════ CONTACT SECTION ═══════════════════════ -->
+  <div class="divider"></div>
+  <section id="contact" class="section-light py-24 lg:py-36">
+    <!-- Decorative layers -->
+    <div class="contact-dot-grid absolute inset-0 pointer-events-none"></div>
+    <div class="contact-glow absolute inset-0 pointer-events-none"></div>
+    <div class="contact-pattern absolute inset-0 pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="grid lg:grid-cols-2 gap-16 items-start">
+
+        <!-- Left copy -->
+        <div class="reveal">
+          <p class="text-white/60 text-xs font-semibold tracking-widest uppercase mb-4">Get in Touch</p>
+          <h2 class="contact-hero-title font-display font-bold text-white mb-6">
+            Ready to Begin?
+          </h2>
+          <p class="text-white/70 text-base leading-relaxed max-w-md mb-10">
+            Tell us about your project and we'll come back with creative ideas, a clear scope, and no pricing surprises. All engagements start with a conversation.
+          </p>
+
+          <div class="space-y-4">
+            <div v-for="item in contactMeta" :key="item.label" class="flex items-center gap-3">
+              <span class="text-lg">{{ item.icon }}</span>
+              <div>
+                <p class="text-white/40 text-xs font-semibold tracking-wide uppercase">{{ item.label }}</p>
+                <p class="text-white text-sm font-medium">{{ item.value }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right form -->
+        <div class="reveal" style="--reveal-delay: 120ms">
+          <div v-if="!contactSent" class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
+            <h3 class="font-display font-bold text-white text-xl mb-6">Send us a message</h3>
+
+            <div class="space-y-4">
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="text-white/50 text-xs font-semibold tracking-wide uppercase block mb-2">Name</label>
+                  <input v-model="contact.name" type="text" placeholder="Your full name"
+                    class="w-full bg-white/8 border border-white/15 rounded-xl px-4 py-3 text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-crimson/50 transition-colors" />
+                </div>
+                <div>
+                  <label class="text-white/50 text-xs font-semibold tracking-wide uppercase block mb-2">Email</label>
+                  <input v-model="contact.email" type="email" placeholder="your@email.com"
+                    class="w-full bg-white/8 border border-white/15 rounded-xl px-4 py-3 text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-crimson/50 transition-colors" />
+                </div>
+              </div>
+
+              <div>
+                <label class="text-white/50 text-xs font-semibold tracking-wide uppercase block mb-2">Service of Interest</label>
+                <select v-model="contact.service"
+                  class="w-full bg-white/8 border border-white/15 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-crimson/50 transition-colors appearance-none"
+                  style="background-color: rgba(255,255,255,0.06)">
+                  <option value="" class="bg-ink">Select a service…</option>
+                  <option v-for="s in services" :key="s.id" :value="s.title" class="bg-ink">{{ s.title }}</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="text-white/50 text-xs font-semibold tracking-wide uppercase block mb-2">Message</label>
+                <textarea v-model="contact.message" rows="4" placeholder="Tell us about your project…"
+                  class="w-full bg-white/8 border border-white/15 rounded-xl px-4 py-3 text-white text-sm placeholder:text-white/30 focus:outline-none focus:border-crimson/50 transition-colors resize-none"></textarea>
+              </div>
+
+              <button @click="submitContact"
+                class="w-full btn-primary text-white font-semibold py-3.5 rounded-xl text-sm mt-2 transition-all hover:-translate-y-0.5">
+                Send Message →
+              </button>
+            </div>
+          </div>
+
+          <div v-else class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-12 text-center">
+            <div class="w-14 h-14 rounded-full grad-bg flex items-center justify-center text-white text-2xl mx-auto mb-5">✓</div>
+            <h3 class="font-display font-bold text-white text-xl mb-2">Message Sent!</h3>
+            <p class="text-white/60 text-sm">We'll get back to you within 24 hours. Looking forward to working with you.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+  <footer class="site-footer pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/8">
+
+        <!-- Brand -->
+        <div class="lg:col-span-2">
+          <img src="logo.svg" alt="Kinpin Arts" class="h-12 w-auto mb-4 opacity-90" />
+          <p class="text-white/50 text-sm leading-relaxed max-w-xs">
+            Zambia's full-service creative & digital agency. Building brands that matter since 2017.
+          </p>
+          <div class="flex gap-3 mt-6">
+            <a v-for="s in socials" :key="s.name" :href="s.href"
+               class="w-9 h-9 rounded-lg bg-white/8 border border-white/12 flex items-center justify-center text-white/60 text-xs font-bold hover:bg-crimson/20 hover:border-crimson/30 hover:text-white transition-all">
+              {{ s.icon }}
+            </a>
+          </div>
+        </div>
+
+        <!-- Services list -->
+        <div>
+          <p class="text-white/30 text-xs font-semibold tracking-widest uppercase mb-4">Services</p>
+          <ul class="space-y-2">
+            <li v-for="s in services" :key="s.id">
+              <a :href="'#' + s.id" class="text-white/55 text-sm hover:text-white transition-colors">{{ s.shortLabel }}</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <p class="text-white/30 text-xs font-semibold tracking-widest uppercase mb-4">Contact</p>
+          <ul class="space-y-3">
+            <li v-for="item in contactMeta" :key="item.label" class="flex items-start gap-2">
+              <span class="text-crimson text-base shrink-0">{{ item.icon }}</span>
+              <span class="text-white/55 text-sm">{{ item.value }}</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-white/25 text-xs">© 2025 Kinpin Arts Media. All rights reserved.</p>
+        <div class="flex gap-6">
+          <a href="#" class="text-white/25 text-xs hover:text-white/50 transition-colors">Privacy Policy</a>
+          <a href="#" class="text-white/25 text-xs hover:text-white/50 transition-colors">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- #app -->
+
+<script src="js/app.js"></script>
+<script>
+const { createApp } = Vue;
+
+createApp({
+  data() {
+    return {
+      menuOpen: false,
+      contactSent: false,
+      contact: { name: '', email: '', service: '', message: '' },
+
+      navLinks: [
+        { label: 'Home',      href: 'index.html' },
+        { label: 'About',     href: 'about.html' },
+        { label: 'Services',  href: 'services.html' },
+        { label: 'Our Work',  href: 'portfolio.html' },
+        { label: 'Contact',   href: 'index.html#contact' },
+      ],
+
+      services: [
+        {
+          id: 'brand-identity',
+          icon: '✦',
+          shortLabel: 'Brand Identity',
+          category: 'Creative Design',
+          title: 'Brand Identity Design',
+          desc: 'Your brand is more than a logo — it\'s the first impression, the lasting emotion, and the story your business tells the world. We craft complete, cohesive brand identities that are distinctive, scalable, and built to endure. From the spark of a concept to a fully packaged brand system, we deliver work that makes your business unmistakable.',
+          features: [
+            'Logo design & brand mark systems',
+            'Colour palette & typography guidelines',
+            'Brand voice & messaging frameworks',
+            'Full brand guidelines (print & digital)',
+            'Stationery & business collateral design',
+            'Brand refresh & rebranding strategy',
+          ],
+          tags: ['Logo Design', 'Brand Guidelines', 'Rebranding', 'Visual Identity'],
+          image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=1200&auto=format&fit=crop&q=80',
+          subLink: null,
+        },
+        {
+          id: 'web-design',
+          icon: '⬡',
+          shortLabel: 'Web Design',
+          category: 'Digital Experience',
+          title: 'Website Design & Development',
+          desc: 'We design and build websites that don\'t just look good — they perform. Combining modern aesthetics with strategic UX, every site we deliver is fast, responsive, and optimised for conversion. Whether you need a brand showcase, a full e-commerce platform, or a custom web application, we bring your digital presence to life with precision.',
+          features: [
+            'Custom UI/UX design & prototyping',
+            'Responsive, mobile-first development',
+            'Laravel, Tailwind & modern stack builds',
+            'E-commerce & payment integration',
+            'CMS setup & client training',
+            'Performance optimisation & SEO foundations',
+          ],
+          tags: ['UI/UX Design', 'Laravel', 'E-commerce', 'Responsive', 'CMS'],
+          image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80',
+          subLink: {
+            href: 'web-design.html',
+            label: 'View our Web Design portfolio →',
+          },
+        },
+        {
+          id: 'event-branding',
+          icon: '◈',
+          shortLabel: 'Event Branding',
+          category: 'Events & Activations',
+          title: 'Event Branding & Solutions',
+          desc: 'Events are moments — we make them movements. From intimate corporate functions to large-scale national conferences, we handle the full creative spectrum: concept, visual identity, physical production, and digital amplification. Our event branding creates immersive experiences that attendees remember long after the last slide.',
+          features: [
+            'Event identity & logo design',
+            'Stage backdrops, banners & signage',
+            'Conference & exhibition booth design',
+            'Event programmes & printed collateral',
+            'Digital event graphics & social assets',
+            'Sponsorship deck design & packages',
+          ],
+          tags: ['Event Identity', 'Signage', 'Stage Design', 'Conferences', 'Digital Graphics'],
+          image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&auto=format&fit=crop&q=80',
+          subLink: null,
+        },
+        {
+          id: 'social-media',
+          icon: '◉',
+          shortLabel: 'Social Media',
+          category: 'Digital Marketing',
+          title: 'Social Media Management',
+          desc: 'Consistent, engaging, and on-brand — that\'s what social media success looks like. We handle everything from strategy and content creation to community management and paid ads, so you can focus on running your business. Every post, reel, and story we produce is designed to grow your audience and drive meaningful results.',
+          features: [
+            'Monthly content strategy & calendar',
+            'Branded graphics, carousels & reels',
+            'Community management & inbox handling',
+            'Paid ads management (Meta, LinkedIn, TikTok)',
+            'Influencer partnership coordination',
+            'Monthly analytics reports & insights',
+          ],
+          tags: ['Strategy', 'Content Creation', 'Paid Ads', 'Community Management', 'Analytics'],
+          image: 'https://images.unsplash.com/photo-1611162616305-69e3e44047a6?w=1200&auto=format&fit=crop&q=80',
+          subLink: null,
+        },
+        {
+          id: 'motion-video',
+          icon: '▣',
+          shortLabel: 'Motion & Video',
+          category: 'Video Production',
+          title: 'Motion Graphics & Video Production',
+          desc: 'Video is the most powerful medium in today\'s digital landscape. We produce cinematic corporate films, animated explainer videos, branded social reels, and motion graphics that bring your story to life. Every frame is crafted with intention — from concept through final delivery — ensuring your content cuts through the noise.',
+          features: [
+            '2D & 3D motion graphics & animation',
+            'Corporate profile & brand films',
+            'Animated explainer & product videos',
+            'Social reels, shorts & platform-optimised content',
+            'Intro/outro & branded video templates',
+            'Script writing & creative direction',
+          ],
+          tags: ['Motion Graphics', 'Corporate Video', 'Animation', 'Social Reels', 'Explainers'],
+          image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=1200&auto=format&fit=crop&q=80',
+          subLink: null,
+        },
+        {
+          id: 'photography',
+          icon: '◌',
+          shortLabel: 'Photography',
+          category: 'Visual Content',
+          title: 'Photography & Videography',
+          desc: 'Great visuals are the backbone of any strong brand. Our photography and videography team delivers professional, polished imagery across events, products, and corporate environments. Whether you need a high-impact product shoot, authentic event coverage, or executive portraits, we ensure your brand is seen at its absolute best.',
+          features: [
+            'Event photography & full-day coverage',
+            'Product & commercial photography',
+            'Corporate headshots & executive portraits',
+            'Aerial & drone photography/videography',
+            'Behind-the-scenes & lifestyle content',
+            'Photo retouching & post-production',
+          ],
+          tags: ['Events', 'Products', 'Corporate', 'Drone', 'Retouching'],
+          image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=1200&auto=format&fit=crop&q=80',
+          subLink: null,
+        },
+        {
+          id: 'print-design',
+          icon: '⬘',
+          shortLabel: 'Print & Collateral',
+          category: 'Print Design',
+          title: 'Print Design & Printing Collateral',
+          desc: 'In a digital-first world, exceptional print still commands attention. We design and produce premium print materials that communicate quality and professionalism — from business cards that make a statement to large-format signage that demands to be seen. Every piece is designed with precision and printed to the highest standard.',
+          features: [
+            'Business cards, letterheads & stationery',
+            'Brochures, flyers & marketing inserts',
+            'Packaging design & product labelling',
+            'Posters, banners & large-format prints',
+            'Annual reports & corporate magazines',
+            'Print-ready file preparation & vendor management',
+          ],
+          tags: ['Print Design', 'Packaging', 'Large Format', 'Stationery', 'Brochures'],
+          image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=1200&auto=format&fit=crop&q=80',
+          subLink: null,
+        },
+        {
+          id: 'digital-marketing',
+          icon: '◭',
+          shortLabel: 'Digital Marketing',
+          category: 'Growth & Advertising',
+          title: 'Digital Marketing & Ads Management',
+          desc: 'More than just running ads — we build and manage full-funnel digital marketing strategies that generate real, measurable growth. From targeted paid campaigns to SEO and email automation, we deploy the right mix of channels to reach your audience, convert prospects, and maximise your return on investment.',
+          features: [
+            'Google Ads (Search, Display & YouTube)',
+            'Meta & LinkedIn advertising campaigns',
+            'SEO strategy & on-page optimisation',
+            'Email marketing design & automation',
+            'Landing page design & A/B testing',
+            'Performance dashboards & monthly reporting',
+          ],
+          tags: ['Google Ads', 'Meta Ads', 'SEO', 'Email Marketing', 'Performance'],
+          image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&auto=format&fit=crop&q=80',
+          subLink: null,
+        },
+        {
+          id: 'consulting',
+          icon: '❖',
+          shortLabel: 'Consulting',
+          category: 'Strategy & Advisory',
+          title: 'Consulting & Integrated Solutions',
+          desc: 'Sometimes the biggest bottleneck isn\'t execution — it\'s direction. Our consulting and strategy service helps businesses at every stage gain clarity on their brand positioning, marketing approach, and creative ecosystem. We act as your strategic creative partner, guiding transformation and aligning every touchpoint with your long-term vision.',
+          features: [
+            'Brand positioning & competitive analysis',
+            'Digital transformation strategy & roadmap',
+            'Integrated marketing communications planning',
+            'Creative audits & brand health assessment',
+            'Agency retainer & ongoing creative direction',
+            'Team training & brand governance workshops',
+          ],
+          tags: ['Strategy', 'Consulting', 'Digital Transformation', 'Creative Direction', 'Positioning'],
+          image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&auto=format&fit=crop&q=80',
+          subLink: null,
+        },
+      ],
+
+      process: [
+        { title: 'Discovery', desc: 'Deep-dive into your brand, goals, and audience through research and consultation.' },
+        { title: 'Design', desc: 'Translating insights into compelling visual concepts aligned with your identity.' },
+        { title: 'Development', desc: 'Bringing designs to life — responsive, functional, and meticulously crafted.' },
+        { title: 'Launch & Support', desc: 'Flawless delivery and post-launch guidance to maximise your new presence.' },
+      ],
+
+      contactMeta: [
+        { icon: '📍', label: 'Location', value: 'Lusaka, Zambia' },
+        { icon: '✉️', label: 'Email', value: 'hello@kinpinarts.com' },
+        { icon: '📞', label: 'Phone', value: '+260 977 000 000' },
+      ],
+
+      socials: [
+        { name: 'Be', icon: 'Be', href: 'https://www.behance.net/KinpinArts' },
+        { name: 'IG', icon: 'IG', href: '#' },
+        { name: 'LI', icon: 'in', href: '#' },
+        { name: 'X',  icon: 'X',  href: '#' },
+      ],
+    };
+  },
+
+  methods: {
+    submitContact() {
+      this.contactSent = true;
+      this.contact = { name: '', email: '', service: '', message: '' };
+    },
+    initScrollReveal() {
+      const els = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            observer.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      els.forEach(el => observer.observe(el));
+    },
+    initQuickNav() {
+      const links = document.querySelectorAll('.quick-nav-link');
+      const sections = Array.from(document.querySelectorAll('.service-anchor'));
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            links.forEach(l => {
+              l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id);
+            });
+          }
+        });
+      }, { threshold: 0.4 });
+      sections.forEach(s => observer.observe(s));
+    },
+    prefillService() {
+      const params = new URLSearchParams(window.location.search);
+      const svc = params.get('service');
+      if (svc) this.contact.service = svc;
+    },
+  },
+
+  mounted() {
+    this.$nextTick(() => {
+      this.initScrollReveal();
+      this.initQuickNav();
+      this.prefillService();
+    });
+  },
+}).mount('#app');
+</script>
+</body>
+</html>

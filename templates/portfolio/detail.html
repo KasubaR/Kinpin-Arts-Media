@@ -1,0 +1,158 @@
+{% extends 'base_index.html' %}
+{% load static %}
+
+{% block title %}{{ project.title }} — Kinpin Arts Media{% endblock %}
+{% block meta_description %}{{ project.description|truncatechars:160 }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/portfolio.css' %}" />
+{% endblock %}
+
+{% block site_footer %}
+<footer class="site-footer border-t border-crimson/15 pt-16 pb-10">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="flex flex-col sm:flex-row justify-between items-start gap-10 pb-10 border-b border-white/10">
+      <div>
+        <img src="{% static 'images/logo.svg' %}" alt="Kinpin Arts" width="320" height="48" class="h-12 w-auto mb-4 opacity-90 object-contain object-left" />
+        <p class="font-body text-white/40 text-sm max-w-xs leading-relaxed">Full-service creative and digital agency based in Zambia.</p>
+        <div class="flex gap-3 mt-5">
+          {% for s in social_links %}
+          <a href="{{ s.href }}" target="_blank" rel="noopener noreferrer"
+             class="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center text-white/40 hover:text-white hover:border-crimson/50 transition-all text-xs font-display font-bold">
+            {{ s.icon }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-x-16 gap-y-3">
+        {% for link in nav_links %}
+        <a href="{{ link.href }}" class="font-body text-white/40 text-sm hover:text-white transition-colors">{{ link.label }}</a>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <p class="font-body text-white/25 text-xs">© {% now "Y" %} Kinpin Arts Media. All rights reserved.</p>
+      <p class="font-body text-white/20 text-xs">Registered in Zambia</p>
+    </div>
+  </div>
+</footer>
+{% endblock %}
+
+{% block content %}
+
+  <section class="page-hero pt-28 pb-16 lg:pt-32 lg:pb-20">
+    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="mb-6">
+        <span class="breadcrumb-pill font-body">
+          <a href="{% url 'home' %}" class="hover:text-white transition-colors">Home</a>
+          <span class="sep">/</span>
+          <a href="{% url 'portfolio' %}" class="hover:text-white transition-colors">Our Work</a>
+          <span class="sep">/</span>
+          <span>{{ project.title|truncatechars:36 }}</span>
+        </span>
+      </div>
+      <div class="relative {% if project.is_featured %}pt-10{% endif %}">
+        {% if project.is_featured %}
+        <span class="featured-badge font-display">Featured</span>
+        {% endif %}
+        <h1 class="hero-headline text-white mb-4">{{ project.title }}</h1>
+      </div>
+      {% if project.client %}
+      <p class="font-body text-white/60 text-sm mb-3">Client: {{ project.client }}</p>
+      {% endif %}
+      <div class="flex flex-wrap gap-2 mb-6">
+        {% for cat in project.categories.all %}
+        <span class="cat-tag font-body">{{ cat.name }}</span>
+        {% endfor %}
+        <span class="cat-tag font-body" style="color:rgba(245,240,246,0.5);background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1)">{{ project.created_at.year }}</span>
+      </div>
+    </div>
+    <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/3 w-[480px] h-[480px] hero-ring opacity-25 pointer-events-none"></div>
+    <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 w-[320px] h-[320px] hero-ring-2 opacity-15 pointer-events-none"></div>
+  </section>
+
+  <section class="section-dark py-12 lg:py-16">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="rounded-2xl overflow-hidden border border-white/10 mb-12">
+        <img src="{{ project.thumbnail.url }}" alt="{{ project.title }}" class="w-full max-h-[520px] object-cover block" />
+      </div>
+      <div class="max-w-3xl">
+        <h2 class="font-display font-bold text-white text-xl mb-4">About this project</h2>
+        <div class="font-body text-white/70 text-sm leading-relaxed space-y-4">
+          {{ project.description|linebreaks }}
+        </div>
+        {% if project.scope_items.exists %}
+        <div class="flex flex-wrap gap-2 mt-8">
+          {% for s in project.scope_items.all %}
+          <span class="scope-chip font-body">{{ s.text }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+
+      {% if project.images.all %}
+      <div class="mt-14">
+        <h3 class="font-display font-bold text-white text-lg mb-6">Gallery</h3>
+        <div class="portfolio-grid">
+          {% for img in project.images.all %}
+          <figure class="pf-card break-inside-avoid mb-4 overflow-hidden rounded-xl border border-white/10 bg-plum/20">
+            <img src="{{ img.image.url }}" alt="{{ img.caption|default:project.title }}" class="pf-thumb w-full block" style="aspect-ratio: 4/3" loading="lazy" decoding="async" />
+            {% if img.caption %}
+            <figcaption class="font-body text-white/45 text-xs px-3 py-2">{{ img.caption }}</figcaption>
+            {% endif %}
+          </figure>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="mt-12 flex flex-wrap gap-3">
+        <a href="{{ project.behance_url|default:behance_url }}" target="_blank" rel="noopener noreferrer" class="btn-primary text-white text-sm font-semibold px-6 py-2.5 rounded-full font-body">
+          View on Behance ↗
+        </a>
+        <a href="{% url 'home' %}#contact" class="btn-outline-light text-white text-sm font-semibold px-6 py-2.5 rounded-full font-body">
+          Start a Similar Project
+        </a>
+        <a href="{% url 'portfolio' %}" class="font-body text-white/60 text-sm underline hover:text-white py-2.5">
+          ← Back to all work
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {% if related %}
+  <div class="divider"></div>
+  <section class="section-dark section-works py-16">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <h2 class="font-display font-bold text-white text-xl mb-8">Related projects</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for p in related %}
+        <a href="{% url 'portfolio_detail' p.slug }}" class="pf-card no-underline">
+          <div class="overflow-hidden">
+            <img src="{{ p.thumbnail.url }}" alt="{{ p.title }}" class="pf-thumb" style="aspect-ratio: 4/3" loading="lazy" decoding="async" />
+          </div>
+          <div class="pf-meta">
+            <p class="font-display font-bold text-white text-sm">{{ p.title }}</p>
+            <p class="text-white/40 text-xs mt-1 font-body">{{ p.created_at.year }}</p>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <div class="divider"></div>
+  <section class="section-light py-16 lg:py-20 relative overflow-hidden">
+    <div class="contact-dot-grid absolute inset-0 pointer-events-none"></div>
+    <div class="contact-glow absolute inset-0 pointer-events-none"></div>
+    <div class="relative z-10 max-w-3xl mx-auto px-6 text-center">
+      <h2 class="font-display font-bold text-white text-2xl mb-4">Want something like this?</h2>
+      <p class="font-body text-white/65 text-sm mb-8">Let's talk about your next campaign or brand build.</p>
+      <a href="{% url 'home' %}#contact" class="bg-white text-plum font-semibold text-sm px-8 py-3.5 rounded-full hover:-translate-y-1 transition-transform shadow-xl inline-block font-body">
+        Start a Project →
+      </a>
+    </div>
+  </section>
+
+{% endblock %}

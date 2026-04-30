@@ -1,0 +1,28 @@
+ 1. Open a terminal (Command Prompt, PowerShell, or Git Bash)
+
+  2. Navigate to your project folder:
+  cd C:\Users\Admin\Desktop\Web-Projects\KinpinArts
+
+  3. Start the server:
+  python manage.py runserver
+
+  4. You'll see output like this:
+  Watching for file changes with StatReloader
+  Performing system checks...
+
+  System check identified no issues (0 silenced).
+  April 30, 2026 - 10:00:00
+  Django version 6.0.4, using settings 'config.settings.dev'
+  Starting development server at http://127.0.0.1:8000/
+  Quit the server with CTRL-BREAK.
+
+  5. Open your browser and go to:
+  http://127.0.0.1:8000/
+
+  ---
+  Useful tips:
+  - Stop the server — press Ctrl + C
+  - Custom port (if 8000 is busy) — python manage.py runserver 8080
+  - The server auto-reloads when you save code changes — no need to restart it
+
+  The terminal must stay open while the server is running. If you close it, the site goes offline.

@@ -1,0 +1,137 @@
+### SECTION 1: Business Overview
+
+**1. What is the primary goal of this website update?**
+[Multiple choice]
+- Expand and showcase new services
+- Attract more web design clients
+- Modernise the look and feel
+- Improve lead generation
+Answer = All of the above
+
+**2. Who is your primary target audience?**
+[Checkboxes]
+- Small businesses & startups
+- Corporates & enterprises
+- Event organisers
+- Personal brands / influencers
+
+**3. What countries or regions do you primarily serve?**
+Zambia
+
+---
+
+### SECTION 2: Services to Add or Expand
+
+**4. Which new services do you want added to the website?
+- Web Design & Development
+- Print Design (flyers, brochures, etc.)
+- Event Solutions
+- Printing collateral/
+- Digital Marketing / Ads Management
+- consultation and integrated services 
+- Photography and videology
+
+**5. Which existing services need updated descriptions, pricing, or visuals?**
+
+- Brand Identity Design
+- Website Development & Design
+- Event Branding
+- Social Media Management
+- Motion Graphics & Video Production
+- Consulting & Integrated Solutions
+ansawer: all of them but no pricng
+
+**6. Do you want to display pricing for any services on the website?**
+- No, I prefer clients to contact me for quotes
+
+---
+
+### SECTION 3: Web Design Service Showcase
+
+*Since the site will advertise web design, it needs to demonstrate that capability visually.*
+
+**8. Do you have existing web design projects (beyond kinpinarts.com) you want featured as case studies?**
+[Multiple choice]
+- Yes, I have several ready to showcase
+
+**9. How do you want web design work displayed?**
+[Checkboxes]
+- Full-page screenshots / mockups
+
+**10. Should the website include a dedicated "Web Design" service page (separate from the general services page)?**
+[Multiple choice]
+- Yes
+
+**11. What web technologies or platforms do you build on? (Clients may ask this)**
+[Checkboxes]
+- Laravel
+tailwind css
+javascript front end
+html
+Laravel php
+
+### SECTION 4: Design & Brand Direction
+
+**12. Should the overall look and feel of the site change, or stay consistent with the current dark/bold aesthetic?**
+[Multiple choice]
+- Redesign it significantly
+
+**13. Are there any websites (competitors or inspiration) whose design style you admire?**
+inspiration: https://blinkmarketing.com/ competitor: https://blink.co.zm/
+
+**14. Are there any colours, fonts, or visual styles you want to add?
+
+**15. Will you supply custom-designed graphics, illustrations, or icons for new sections?**
+- Yes, for key sections — stock assets elsewhere
+
+### SECTION 5: Pages & Site Structure
+
+**16. Which new pages do you want added?**
+[Checkboxes]
+- non for now
+
+**17. Should the Portfolio / Works section be reorganised by service category (e.g. Branding, Web, Events)?**
+[Multiple choice]
+-7.  Service by Category... problem is some have more than 1 category (like a mix of a number of things in 1 project)
+
+**18. Do you want a client onboarding or project inquiry form more detailed than the current Contact form?**
+[Multiple choice]
+- For attention span sake, a simple one will be better.
+
+---
+
+### SECTION 6: Content & Copy
+
+**19. Who will write the copy (text) for new pages?**
+- I'll need AI-assisted copy suggestions
+
+**20. Do you have updated client logos to add to the "Our Clients" section?**
+[Multiple choice]
+- Yes, I have new logos ready
+
+**21. Do you want client testimonials added or updated?**
+[Multiple choice]
+- Yes — I have testimonials ready to add
+
+---
+
+### SECTION 7: Technical & Functional Requirements
+
+**22. The site currently runs on WordPress. Should it stay on WordPress?
+- I want your recommendation
+
+**23. Do you need any new functional features added?**
+
+- Newsletter signup / email capture
+
+**24. Do you want the site optimised for search engines (SEO) as part of this update?**
+[Multiple choice]
+- Yes — full SEO setup (metadata, schema, speed)
+
+**25. Should the site load noticeably faster than it currently does?**
+[Multiple choice]
+- Yes — performance optimisation is important and mobile friendly is important
+
+
+**30. Is there anything else about this project you'd like us to know before we begin?**
+[Paragraph / Long answer]

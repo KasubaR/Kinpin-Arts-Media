@@ -1,0 +1,233 @@
+{% extends 'base_index.html' %}
+{% load static %}
+
+{% block title %}Our Work — Kinpin Arts Media{% endblock %}
+{% block meta_description %}Browse selected works from Kinpin Arts Media — brand identities, websites, event activations, print, motion graphics and more.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/portfolio.css' %}" />
+{% endblock %}
+
+{% block site_footer %}
+<footer class="site-footer border-t border-crimson/15 pt-16 pb-10">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="flex flex-col sm:flex-row justify-between items-start gap-10 pb-10 border-b border-white/10">
+      <div>
+        <img src="{% static 'images/logo.svg' %}" alt="Kinpin Arts" width="320" height="48" class="h-12 w-auto mb-4 opacity-90 object-contain object-left" />
+        <p class="font-body text-white/40 text-sm max-w-xs leading-relaxed">Full-service creative and digital agency based in Zambia.</p>
+        <div class="flex gap-3 mt-5">
+          {% for s in social_links %}
+          <a href="{{ s.href }}" target="_blank" rel="noopener noreferrer"
+             class="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center text-white/40 hover:text-white hover:border-crimson/50 transition-all text-xs font-display font-bold">
+            {{ s.icon }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-x-16 gap-y-3">
+        {% for link in nav_links %}
+        <a href="{{ link.href }}" class="font-body text-white/40 text-sm hover:text-white transition-colors">{{ link.label }}</a>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <p class="font-body text-white/25 text-xs">© {% now "Y" %} Kinpin Arts Media. All rights reserved.</p>
+      <p class="font-body text-white/20 text-xs">Registered in Zambia</p>
+    </div>
+  </div>
+</footer>
+{% endblock %}
+
+{% block content %}
+
+  <section class="page-hero pt-28 pb-20 lg:pt-36 lg:pb-28">
+    <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/3 w-[600px] h-[600px] hero-ring opacity-30 pointer-events-none"></div>
+    <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 w-[420px] h-[420px] hero-ring-2 opacity-20 pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="mb-8">
+        <span class="breadcrumb-pill font-body">
+          <a href="{% url 'home' %}" class="hover:text-white transition-colors">Home</a>
+          <span class="sep">/</span>
+          <span>Our Work</span>
+        </span>
+      </div>
+
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+        <div class="max-w-2xl">
+          <p class="text-white/60 text-sm font-semibold tracking-widest uppercase mb-4 font-body">Selected Works</p>
+          <h1 class="hero-headline text-white mb-5">
+            Brands We've<br/>
+            <em class="not-italic text-white">Elevated.</em>
+          </h1>
+          <p class="font-body text-white/75 text-lg leading-relaxed max-w-lg">
+            Seven years of bold creative work — from full brand identities and digital platforms to event activations and motion campaigns.
+          </p>
+        </div>
+        <div class="flex-shrink-0">
+          <a href="{{ behance_url }}" target="_blank" rel="noopener noreferrer"
+             class="hero-btn-outline btn-outline-light text-white font-semibold px-7 py-3.5 rounded-full text-sm inline-flex items-center gap-2 group font-body">
+            View All on Behance
+            <span class="transition-transform duration-200 group-hover:translate-x-1">↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div
+    id="portfolio-root"
+    class="portfolio-page-root"
+    data-behance-url="{{ behance_url }}"
+    data-contact-url="{% url 'home' %}#contact"
+  >
+    {{ projects_payload|json_script:"portfolio-data" }}
+
+    <div class="filter-bar">
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 py-4">
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex gap-2 overflow-x-auto pb-1 scrollbar-none flex-1">
+            <button type="button" class="filter-btn active flex-shrink-0" data-filter="All">
+              All
+              <span class="count">{{ project_total }}</span>
+            </button>
+            {% for cat in categories %}
+            <button type="button" class="filter-btn flex-shrink-0" data-filter="{{ cat.name }}">
+              {{ cat.name }}
+              <span class="count">{{ cat.project_count }}</span>
+            </button>
+            {% endfor %}
+          </div>
+          <span id="portfolio-result-count" class="result-count flex-shrink-0 hidden sm:block font-body"></span>
+        </div>
+      </div>
+    </div>
+
+    <section class="section-dark section-works py-12 lg:py-16">
+      <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+        <div id="portfolio-empty" class="empty-state reveal" {% if projects %}hidden{% endif %}>
+          <p class="empty-state__glyph font-display" aria-hidden="true">◌</p>
+          <p class="empty-state__title font-display">No projects in this category yet.</p>
+          <p class="empty-state__hint font-body">
+            Check back soon or <a href="{% url 'home' %}#contact">get in touch</a>.
+          </p>
+        </div>
+
+        <div id="portfolio-grid" class="portfolio-grid" {% if not projects %}hidden{% endif %}>
+          {% for project in projects %}
+          <button type="button"
+                  class="pf-card reveal text-left"
+                  data-slug="{{ project.slug }}"
+                  data-categories="{% for c in project.categories.all %}{{ c.name }}{% if not forloop.last %}|{% endif %}{% endfor %}"
+                  style="--reveal-delay: {% widthratio forloop.counter0 1 50 %}ms">
+            {% if project.is_featured %}
+            <span class="featured-badge font-display">Featured</span>
+            {% endif %}
+            <div class="overflow-hidden">
+              <img
+                src="{{ project.thumbnail.url }}"
+                alt="{{ project.title }}"
+                class="pf-thumb"
+                loading="lazy"
+                decoding="async"
+                style="aspect-ratio: {% cycle '4/3' '16/9' '16/10' '4/5' '1/1' '4/3' '16/9' '4/3' %}"
+              />
+            </div>
+            <div class="pf-overlay">
+              <div class="flex flex-wrap gap-1 mb-2">
+                {% for cat in project.categories.all %}
+                <span class="cat-tag font-body">{{ cat.name }}</span>
+                {% endfor %}
+              </div>
+              <p class="font-display font-bold text-white text-sm">{{ project.title }}</p>
+              <p class="text-white/50 text-xs mt-0.5 font-body">{{ project.created_at.year }}</p>
+              <p class="text-crimson text-xs font-semibold mt-2 font-body">View Project →</p>
+            </div>
+            <div class="pf-meta">
+              <div class="flex flex-wrap gap-1 mb-2">
+                {% for cat in project.categories.all %}
+                <span class="cat-tag font-body">{{ cat.name }}</span>
+                {% endfor %}
+              </div>
+              <p class="font-display font-bold text-white text-sm leading-snug">{{ project.title }}</p>
+              <p class="text-white/40 text-xs mt-0.5 font-body">{{ project.created_at.year }}</p>
+            </div>
+          </button>
+          {% endfor %}
+        </div>
+
+        <div class="mt-16 text-center reveal">
+          <div class="inline-flex flex-col sm:flex-row items-center gap-4">
+            <p class="text-white/40 text-sm font-body">Want to see more of our work?</p>
+            <a href="{{ behance_url }}" target="_blank" rel="noopener noreferrer"
+               class="btn-primary text-white font-semibold px-7 py-3 rounded-full text-sm inline-flex items-center gap-2 group font-body">
+              View Full Portfolio on Behance
+              <span class="transition-transform duration-200 group-hover:translate-x-1">↗</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <div class="divider"></div>
+
+  <section class="section-light py-20 lg:py-24 relative overflow-hidden">
+    <div class="contact-dot-grid absolute inset-0 pointer-events-none"></div>
+    <div class="contact-glow absolute inset-0 pointer-events-none"></div>
+    <div class="relative z-10 max-w-4xl mx-auto px-6 lg:px-10 text-center">
+      <p class="text-white/60 text-xs font-semibold tracking-widest uppercase mb-4 font-body">Let's Create Together</p>
+      <h2 class="section-heading font-display font-bold text-white mb-5">
+        Your Project Could Be<br/>Featured Here Next.
+      </h2>
+      <p class="font-body text-white/65 text-base max-w-md mx-auto mb-10">
+        Tell us what you need. We'll bring the creative direction, the craft, and the strategy.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="{% url 'home' %}#contact" class="bg-white text-plum font-semibold text-sm px-8 py-3.5 rounded-full hover:-translate-y-1 transition-transform shadow-xl inline-block font-body">
+          Start a Project →
+        </a>
+        <a href="{% url 'services' %}" class="hero-btn-outline btn-outline-light text-white font-semibold px-8 py-3.5 rounded-full text-sm inline-block font-body">
+          Explore Services
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div id="portfolio-lightbox" class="lightbox-backdrop" hidden role="dialog" aria-modal="true" aria-labelledby="lb-title">
+    <div class="lightbox-panel" id="portfolio-lightbox-panel">
+      <button type="button" class="lightbox-close" id="lb-close" aria-label="Close">✕</button>
+      <button type="button" class="lb-nav-btn lb-prev" id="lb-prev" hidden aria-label="Previous">‹</button>
+      <button type="button" class="lb-nav-btn lb-next" id="lb-next" hidden aria-label="Next">›</button>
+      <div class="lb-img-wrap">
+        <img id="lb-img" src="" alt="" width="900" height="520" />
+        <div class="lb-img-overlay"></div>
+      </div>
+      <div class="p-7 lg:p-9">
+        <div id="lb-tags" class="flex flex-wrap gap-2 mb-3"></div>
+        <h2 id="lb-title" class="font-display font-bold text-white text-2xl lg:text-3xl mb-3"></h2>
+        <p id="lb-desc" class="font-body text-white/60 text-sm leading-relaxed max-w-xl mb-6"></p>
+        <div id="lb-scope" class="lb-scope flex-wrap gap-2 mb-7" aria-hidden="true"></div>
+        <div class="flex flex-wrap gap-3">
+          <a id="lb-behance" href="{{ behance_url }}" target="_blank" rel="noopener noreferrer" class="btn-primary text-white text-sm font-semibold px-6 py-2.5 rounded-full inline-flex items-center gap-2 font-body">
+            View on Behance ↗
+          </a>
+          <a id="lb-contact" href="{% url 'home' %}#contact" class="btn-outline-light text-white text-sm font-semibold px-6 py-2.5 rounded-full font-body">
+            Start a Similar Project
+          </a>
+          <a id="lb-detail" href="#" class="text-white/80 text-sm font-semibold underline hover:text-white font-body">
+            Full case study →
+          </a>
+        </div>
+        <div id="lb-dots" class="flex items-center gap-2 mt-7"></div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/portfolio.js' %}"></script>
+{% endblock %}

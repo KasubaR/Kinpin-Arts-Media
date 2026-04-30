@@ -1,0 +1,54 @@
+{% load static %}
+<footer class="site-footer pt-16 pb-8 border-t border-crimson/15">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/10">
+
+      <div class="lg:col-span-2">
+        <img src="{% static 'images/logo.svg' %}" alt="Kinpin Arts" width="280" height="48" class="h-12 w-auto mb-4 opacity-90 object-contain object-left" />
+        <p class="font-body text-white/50 text-sm leading-relaxed max-w-xs">
+          Zambia's full-service creative & digital agency. Building brands that matter since 2017.
+        </p>
+        <div class="flex gap-3 mt-6">
+          {% for s in social_links %}
+          <a href="{{ s.href }}" target="_blank" rel="noopener noreferrer"
+             class="w-9 h-9 rounded-lg bg-white/8 border border-white/12 flex items-center justify-center text-white/60 text-xs font-display font-bold hover:bg-crimson/20 hover:border-crimson/30 hover:text-white transition-all">
+            {{ s.icon }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div>
+        <p class="text-white/30 text-xs font-semibold tracking-widest uppercase mb-4 font-body">Services</p>
+        <ul class="space-y-2">
+          {% for svc in services_for_footer %}
+          <li>
+            <a href="{% url 'services' %}#{{ svc.slug }}" class="font-body text-white/55 text-sm hover:text-white transition-colors">{{ svc.title|truncatechars:26 }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div>
+        <p class="text-white/30 text-xs font-semibold tracking-widest uppercase mb-4 font-body">Contact</p>
+        <ul class="space-y-3">
+          {% for item in contact_meta %}
+          <li class="flex items-start gap-2">
+            <span class="text-crimson text-base shrink-0" aria-hidden="true">{{ item.icon }}</span>
+            <span class="font-body text-white/55 text-sm">{{ item.value }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="font-body text-white/25 text-xs">© {% now "Y" %} Kinpin Arts Media. All rights reserved.</p>
+      <div class="flex gap-6">
+        <a href="#" class="font-body text-white/25 text-xs hover:text-white/50 transition-colors">Privacy Policy</a>
+        <a href="#" class="font-body text-white/25 text-xs hover:text-white/50 transition-colors">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>

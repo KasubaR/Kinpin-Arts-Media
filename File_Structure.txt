@@ -1,0 +1,66 @@
+Recommended
+project_root/
+│
+├── manage.py
+├── requirements.txt
+├── .env
+│
+├── config/                # main project config
+│   ├── __init__.py
+│   ├── settings/
+│   │   ├── base.py
+│   │   ├── dev.py
+│   │   └── prod.py
+│   ├── urls.py
+│   ├── asgi.py
+│   └── wsgi.py
+│
+├── apps/                  # all your apps live here
+│   ├── core/              # homepage, general pages
+│   ├── services/          # services logic
+│   ├── portfolio/         # projects/case studies
+│   ├── accounts/          # users/auth
+│   ├── analytics/         # stats (future)
+│   └── transactions/      # for your expense system
+│
+├── templates/             # global HTML templates
+│   ├── base.html
+│   ├── includes/
+│   └── pages/
+│
+├── static/                # CSS, JS, images
+│   ├── css/
+│   ├── js/
+│   └── images/
+│
+├── media/                 # uploaded files (user uploads)
+│
+└── utils/                 # helper functions
+
+Inside Each App (Best Practice)
+
+Example: portfolio/
+
+portfolio/
+├── migrations/
+├── __init__.py
+├── admin.py
+├── apps.py
+├── models.py
+├── views.py
+├── urls.py
+├── forms.py
+├── services.py        # business logic (clean code)
+├── selectors.py       # queries (advanced pattern)
+├── templates/
+│   └── portfolio/
+│       ├── list.html
+│       └── detail.html
+└── static/
+    └── portfolio/
+
+How Everything Connects
+
+Flow:
+
+User → URL → View → Model → Template → Response

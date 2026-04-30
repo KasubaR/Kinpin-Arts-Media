@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact — Kinpin Arts Media{% endblock %}
+{% block meta_description %}Get in touch with Kinpin Arts Media for a quote on branding, web design, events, or digital marketing.{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <h1>Get In Touch</h1>
+        <p>Tell us about your project and we&rsquo;ll get back to you shortly.</p>
+    </div>
+</section>
+
+<section class="section contact-section">
+    <div class="container">
+        <div class="two-col">
+            <form method="post" class="contact-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="name">Name <span>*</span></label>
+                    <input type="text" id="name" name="name" required placeholder="Your full name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email <span>*</span></label>
+                    <input type="email" id="email" name="email" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+260 ...">
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject <span>*</span></label>
+                    <input type="text" id="subject" name="subject" required placeholder="e.g. Brand Identity Project">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message <span>*</span></label>
+                    <textarea id="message" name="message" rows="5" required placeholder="Briefly describe your project or inquiry..."></textarea>
+                </div>
+                <button type="submit" class="btn btn--primary">Send Message</button>
+            </form>
+
+            <div class="contact-info">
+                <h3>Let&rsquo;s Talk</h3>
+                <p>We work with clients across Zambia and beyond. Whether you have a fully formed brief or just an idea, we&rsquo;d love to hear from you.</p>
+                <ul>
+                    <li>Brand Identity &amp; Logo Design</li>
+                    <li>Web Design &amp; Development</li>
+                    <li>Event Branding &amp; Print</li>
+                    <li>Social Media Management</li>
+                    <li>Motion Graphics &amp; Video</li>
+                    <li>Consulting &amp; Integrated Solutions</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

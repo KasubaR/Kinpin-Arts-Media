@@ -1,7 +1,7 @@
 {% extends 'base_index.html' %}
 {% load static %}
 
-{% block title %}Kinpin Arts Media — Creative & Digital Agency{% endblock %}
+{% block title %}Kinpin Arts Media Creative & Digital Agency{% endblock %}
 
 {% block content %}
 
@@ -22,7 +22,7 @@
 
           <p class="font-body text-lg text-white leading-relaxed max-w-md mb-10">
             For over 7 years, Kinpin Arts Media has been turning bold visions into
-            unforgettable brand experiences — from identity design to web, motion, and beyond.
+            unforgettable brand experiences from identity design to web, motion, and beyond.
           </p>
 
           <div class="flex flex-wrap gap-4">
@@ -266,7 +266,7 @@
       <h3 class="newsletter-heading font-display font-bold text-white text-3xl lg:text-4xl mb-4">
         Get Design Insights<br/>Delivered to You
       </h3>
-      <p class="font-body text-white/50 mb-8">Brand tips, project showcases, and agency updates — straight to your inbox.</p>
+      <p class="font-body text-white/50 mb-8">Brand tips, project showcases, and agency updates straight to your inbox.</p>
       <form method="post" action="{% url 'newsletter_subscribe' %}" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
         {% csrf_token %}
         <input type="email" name="email" placeholder="your@email.com" required

@@ -99,7 +99,7 @@ body::before {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('../images/pattern.svg');
+  background-image: url('../images/background_pattern.svg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -477,7 +477,7 @@ body::before {
 
 /* ── CONTACT CTA SECTION ── */
 .contact-pattern {
-  background-image: url('../images/pattern.svg');
+  background-image: url('../images/background_pattern.svg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

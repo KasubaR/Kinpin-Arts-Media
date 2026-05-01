@@ -99,7 +99,7 @@ body::before {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('../hero-demo/assets/pattern.svg');
+  background-image: url('../static/images/background_pattern.svg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -469,7 +469,7 @@ body::before {
 
 /* ── CONTACT CTA SECTION ── */
 .contact-pattern {
-  background-image: url('../hero-demo/assets/pattern.svg');
+  background-image: url('../static/images/background_pattern.svg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

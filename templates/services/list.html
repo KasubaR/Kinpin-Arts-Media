@@ -204,20 +204,20 @@
       <div class="grid lg:grid-cols-2 gap-16 items-start">
 
         <div class="reveal">
-          <p class="text-white/60 text-xs font-semibold tracking-widest uppercase mb-4 font-body">Get in Touch</p>
+          <p class="text-white text-xs font-semibold tracking-widest uppercase mb-4 font-body">Get in Touch</p>
           <h2 class="contact-hero-title font-display font-bold text-white mb-6">
             Ready to Begin?
           </h2>
-          <p class="font-body text-white/70 text-base leading-relaxed max-w-md mb-10">
+          <p class="font-body text-white text-base leading-relaxed max-w-md mb-10">
             Tell us about your project and we'll come back with creative ideas, a clear scope, and no pricing surprises. All engagements start with a conversation.
           </p>
 
           <div class="space-y-4">
             {% for item in contact_meta %}
             <div class="flex items-start gap-3">
-              <span class="text-lg shrink-0 mt-0.5" aria-hidden="true">{{ item.icon }}</span>
+              <span class="text-white shrink-0 mt-0.5" aria-hidden="true">{{ item.icon|safe }}</span>
               <div>
-                <p class="text-white/40 text-xs font-semibold tracking-wide uppercase font-body">{{ item.label }}</p>
+                <p class="text-white text-xs font-semibold tracking-wide uppercase font-body">{{ item.label }}</p>
                 {% if item.lines %}
                   {% for line in item.lines %}
                   <p class="text-white text-sm font-medium font-body leading-snug">{{ line }}</p>

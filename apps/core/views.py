@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib import messages
 from django.db.models import Prefetch
 from django.shortcuts import redirect, render
@@ -16,12 +18,14 @@ PROCESS_STEPS = [
     {'title': 'Launch & Support', 'desc': 'Flawless delivery and post-launch guidance to maximise your new presence.'},
 ]
 
-STATS = [
-    {'value': '7+', 'label': 'Years of Experience', 'sub': 'In the creative industry'},
-    {'value': '100+', 'label': 'Projects Delivered', 'sub': 'Across all service areas'},
-    {'value': '98%', 'label': 'Client Satisfaction', 'sub': 'Long-term partnerships'},
-    {'value': '13+', 'label': 'Active Clients', 'sub': 'Zambia & beyond'},
-]
+def _get_stats():
+    years = datetime.date.today().year - 2017
+    return [
+        {'value': f'{years}+', 'label': 'Years of Experience', 'sub': 'In the creative industry'},
+        {'value': '100+', 'label': 'Projects Delivered', 'sub': 'Across all service areas'},
+        {'value': '98%', 'label': 'Client Satisfaction', 'sub': 'Long-term partnerships'},
+        {'value': '13+', 'label': 'Active Clients', 'sub': 'Zambia & beyond'},
+    ]
 
 SOCIAL_LINKS = [
     {'name': 'Behance', 'icon': 'Be', 'href': 'https://www.behance.net/KinpinArts'},
@@ -33,28 +37,38 @@ SOCIAL_LINKS = [
 ABOUT_MILESTONES = [
     {
         'year': '2017',
-        'title': 'Studio Founded',
-        'desc': 'Kinpin Arts opened its doors as a freelance design studio in Lusaka, taking on local branding and print projects.',
-    },
-    {
-        'year': '2018',
-        'title': 'First Major Client',
-        'desc': 'Landed our first institutional client — a national brand campaign that put us on the map and shaped our agency model.',
+        'title': 'The Foundation',
+        'desc': 'Kinpin Arts started as a freelance creative studio built on a passion for design, branding, and visual storytelling. Beginning with poster designs, logo design, print work, and brand support for small businesses, the goal was simple: help brands look professional and communicate with purpose.',
     },
     {
         'year': '2020',
-        'title': 'Full Agency Structure',
-        'desc': 'Expanded into a full-service agency with dedicated teams for design, development, and social media management.',
+        'title': 'Official Registration',
+        'desc': 'Kinpin Arts Media was formally registered as a creative agency in Zambia, transitioning from freelance operations into a structured business. This marked the foundation of a stronger vision, building brands through strategy, identity, and digital presence.',
+    },
+    {
+        'year': '2021',
+        'title': 'Expanding Services',
+        'desc': 'As client demand grew, services expanded beyond graphic design into brand identity systems, company profiles, social media design, and digital campaign execution. Kinpin evolved from a design studio into a strategic creative partner for businesses and institutions.',
     },
     {
         'year': '2022',
-        'title': 'Digital Expansion',
-        'desc': 'Launched our web development and motion graphics divisions, completing our end-to-end creative offering.',
+        'title': 'Full Digital Growth',
+        'desc': 'Website design and development, photography, videography, and motion graphics were added to the service offering, creating a full-service creative ecosystem. Clients could now access complete brand and digital solutions under one roof.',
+    },
+    {
+        'year': '2023',
+        'title': 'Institutional Projects & National Campaigns',
+        'desc': 'Kinpin Arts Media delivered major institutional creative work, including the visual identity and branding support for the Travel, Hospitality & Tourism Education Summit by ZITHS, and the brand identity for the Invest Zambia International Conference.',
     },
     {
         'year': '2024',
-        'title': 'Growing Portfolio & Reach',
-        'desc': 'Now serving 13+ active clients across Zambia with a portfolio spanning finance, sport, wellness, media, and government.',
+        'title': 'Growing Portfolio & Recognition',
+        'desc': 'With 500+ completed projects and 15+ active clients across sectors including healthcare, media, retail, finance, events, and public institutions, Kinpin Arts Media continued to grow its reputation as a trusted full-service creative agency.',
+    },
+    {
+        'year': 'Today',
+        'title': 'More than Just Design',
+        'desc': 'Now serving brands across Zambia and beyond, Kinpin Arts Media continues to operate with one mission: to turn ideas into brands that speak, sell, and stay remembered. We offer 360 services and leave no stone unturned.',
     },
 ]
 
@@ -224,7 +238,7 @@ def home(request):
         'projects': projects,
         'portfolio_tabs': portfolio_tabs,
         'process_steps': PROCESS_STEPS,
-        'stats': STATS,
+        'stats': _get_stats(),
         'testimonial_cards': _testimonial_cards(),
         'office_locations': OFFICE_LOCATIONS,
     }
@@ -245,7 +259,7 @@ def about(request):
         'social_links': SOCIAL_LINKS,
         'nav_active_label': 'About Us',
         'services': services,
-        'stats': STATS,
+        'stats': _get_stats(),
         'milestones': ABOUT_MILESTONES,
         'values': ABOUT_VALUES,
         'credentials': ABOUT_CREDENTIALS,

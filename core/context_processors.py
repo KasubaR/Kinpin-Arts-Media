@@ -1,4 +1,5 @@
-from services.models import Service
+from apps.core.site_content import OFFICE_LOCATIONS
+from apps.services.models import Service
 
 
 def global_context(request):
@@ -34,4 +35,5 @@ def global_context(request):
         'services': services,
         'behance_url': behance_url,
         'nav_active_label': nav_active_label,
+        'office_locations': OFFICE_LOCATIONS,
     }

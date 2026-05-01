@@ -1,0 +1,52 @@
+{% load static %}
+<footer class="site-footer border-t border-crimson/15 pt-16 pb-10">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-14">
+      <div class="lg:col-span-2">
+        <div class="mb-5">
+          <img src="{% static 'images/logo.svg' %}" alt="Kinpin Arts" width="320" height="64" class="h-16 w-auto max-w-[min(320px,90vw)] object-contain object-left" />
+        </div>
+        <p class="font-body text-white/40 text-sm leading-relaxed max-w-xs">
+          Full-service creative and digital agency based in Zambia. Turning visions into reality for 7+ years.
+        </p>
+        <div class="flex gap-4 mt-6">
+          {% for social in social_links %}
+          <a href="{{ social.href }}" target="_blank" rel="noopener noreferrer"
+             class="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center text-white/40 hover:text-white hover:border-crimson/50 transition-all duration-200 text-xs font-display font-bold">
+            {{ social.icon }}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div>
+        <h5 class="font-display font-semibold text-white text-sm mb-5 uppercase tracking-widest">Services</h5>
+        <ul class="space-y-3">
+          {% for s in services|slice:":5" %}
+          <li>
+            <a href="{% url 'home' %}#services" class="font-body text-white/40 text-sm hover:text-white transition-colors">{{ s.title }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="font-display font-semibold text-white text-sm mb-5 uppercase tracking-widest">Company</h5>
+        <ul class="space-y-3">
+          {% for link in nav_links %}
+          <li>
+            <a href="{{ link.href }}" class="font-body text-white/40 text-sm hover:text-white transition-colors">{{ link.label }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider mb-8"></div>
+
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+      <p class="font-body text-white/30 text-xs">© {% now "Y" %} Kinpin Arts Media. All rights reserved.</p>
+      <p class="font-body text-white/20 text-xs">Registered in Zambia · Crafted with purpose.</p>
+    </div>
+  </div>
+</footer>

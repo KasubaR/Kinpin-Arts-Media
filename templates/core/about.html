@@ -159,7 +159,6 @@
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {% for val in values %}
         <div class="value-card reveal" style="--reveal-delay: {% widthratio forloop.counter0 1 70 %}ms">
-          <div class="value-icon">{{ val.icon }}</div>
           <h3 class="font-display font-bold text-white text-lg mb-2">{{ val.title }}</h3>
           <p class="font-body text-white/60 text-sm leading-relaxed">{{ val.desc }}</p>
         </div>
@@ -187,7 +186,7 @@
         <div class="space-y-4 reveal" style="--reveal-delay: 100ms">
           {% for cred in credentials %}
           <div class="credential-block">
-            <span class="cred-icon" aria-hidden="true">{{ cred.icon }}</span>
+            <span class="cred-icon" aria-hidden="true">{{ cred.icon|safe }}</span>
             <div>
               <p class="font-display font-bold text-white text-sm">{{ cred.title }}</p>
               <p class="font-body text-white/50 text-xs mt-0.5 leading-relaxed">{{ cred.detail }}</p>
@@ -236,10 +235,23 @@
       <div class="text-center mb-12 reveal">
         <p class="text-white/35 text-sm font-body">Trusted by businesses across Zambia and beyond</p>
       </div>
-      <div class="flex flex-wrap justify-center gap-3 reveal">
-        {% for name in client_pills %}
-        <span class="client-pill font-display">{{ name }}</span>
-        {% endfor %}
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-x-12 gap-y-10 reveal">
+        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Africast.svg' %}" alt="Africast" /></div>
+        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Amiran.svg' %}" alt="Amiran" /></div>
+        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Bwacha MSS.svg' %}" alt="Bwacha MSS" /></div>
+        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_FC.svg' %}" alt="FC" /></div>
+        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_FF.svg' %}" alt="FF" /></div>
+        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Frasmac.svg' %}" alt="Frasmac" /></div>
+        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Lukanda.svg' %}" alt="Lukanda" /></div>
+        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Mannock.svg' %}" alt="Mannock" /></div>
+        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Metalock.svg' %}" alt="Metalock" /></div>
+        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Mirai Media.svg' %}" alt="Mirai Media" /></div>
+        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Ntumai.svg' %}" alt="Ntumai" /></div>
+        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Qualitick.svg' %}" alt="Qualitick" /></div>
+        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Skin Zm.svg' %}" alt="Skin Zm" /></div>
+        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_ZDA.svg' %}" alt="ZDA" /></div>
+        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_ZITHS.svg' %}" alt="ZITHS" /></div>
+        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Zenith.svg' %}" alt="Zenith" /></div>
       </div>
     </div>
   </section>

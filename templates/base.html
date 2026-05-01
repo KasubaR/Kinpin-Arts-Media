@@ -11,21 +11,7 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <header class="site-header">
-        <nav class="navbar">
-            <a href="{% url 'home' %}" class="brand">
-                <img src="{% static 'images/logo.svg' %}" alt="Kinpin Arts Media" class="logo">
-            </a>
-            <ul class="nav-links">
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'about' %}">About</a></li>
-                <li><a href="{% url 'services' %}">Services</a></li>
-                <li><a href="{% url 'portfolio' %}">Portfolio</a></li>
-                <li><a href="{% url 'contact' %}" class="btn-cta">Get a Quote</a></li>
-            </ul>
-            <button class="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
-        </nav>
-    </header>
+    {% include 'partials/site_nav.html' %}
 
     <main>
         {% if messages %}
@@ -39,41 +25,9 @@
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="site-footer">
-        <div class="footer-inner">
-            <div class="footer-brand">
-                <img src="{% static 'images/logo.svg' %}" alt="Kinpin Arts Media" class="logo">
-                <p>Creative Agency based in Zambia.<br>
-                   Brand Identity &bull; Web Design &bull; Events &bull; Digital Marketing</p>
-            </div>
-            <div class="footer-links">
-                <h4>Services</h4>
-                <ul>
-                    <li><a href="{% url 'services' %}">Brand Identity Design</a></li>
-                    <li><a href="{% url 'services' %}">Web Design &amp; Development</a></li>
-                    <li><a href="{% url 'services' %}">Event Branding</a></li>
-                    <li><a href="{% url 'services' %}">Digital Marketing</a></li>
-                    <li><a href="{% url 'services' %}">Motion Graphics &amp; Video</a></li>
-                </ul>
-            </div>
-            <div class="footer-contact">
-                <h4>Get In Touch</h4>
-                <p><a href="{% url 'contact' %}">Contact Us</a></p>
-                <p><a href="{% url 'portfolio' %}">View Our Work</a></p>
-            </div>
-            <div class="footer-newsletter">
-                <h4>Stay Updated</h4>
-                <form method="post" action="{% url 'newsletter_subscribe' %}">
-                    {% csrf_token %}
-                    <input type="email" name="email" placeholder="Your email address" required>
-                    <button type="submit">Subscribe</button>
-                </form>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; {% now "Y" %} Kinpin Arts Media. All rights reserved.</p>
-        </div>
-    </footer>
+    {% block site_footer %}
+    {% include 'partials/site_footer.html' %}
+    {% endblock %}
 
     <script src="{% static 'js/main.js' %}"></script>
     {% block extra_js %}{% endblock %}

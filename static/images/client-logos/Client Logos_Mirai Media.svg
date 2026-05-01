@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <style>
+      .cls-1 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-2 {
+        font-family: Alterwave-Light, Alterwave;
+        font-weight: 300;
+      }
+
+      .cls-2, .cls-3 {
+        fill: #010101;
+        font-size: 47.88px;
+      }
+
+      .cls-4 {
+        fill: #b7d433;
+      }
+
+      .cls-3 {
+        font-family: Alterwave-Regular, Alterwave;
+      }
+
+      .cls-5 {
+        letter-spacing: -.01em;
+      }
+
+      .cls-6 {
+        letter-spacing: 0em;
+      }
+    </style>
+  </defs>
+  <text class="cls-3" transform="translate(252.84 256)"><tspan class="cls-6" x="0" y="0">m</tspan><tspan x="50.51" y="0">i</tspan><tspan class="cls-6" x="64.35" y="0">r</tspan><tspan x="82.59" y="0">ai</tspan></text>
+  <text class="cls-2" transform="translate(252.84 293.77)"><tspan class="cls-1" x="0" y="0">m</tspan><tspan x="50.52" y="0">e</tspan><tspan class="cls-5" x="79.53" y="0">di</tspan><tspan x="121.86" y="0">a</tspan></text>
+  <path class="cls-4" d="m233.41,224.85v69.63c0,4.4-3.56,7.96-7.96,7.96H70.79c-7.09,0-10.65-8.58-5.63-13.59l76.94-76.94c5.02-5.02,13.59-1.46,13.59,5.63v46.59c0,7.09,8.58,10.65,13.59,5.63l50.53-50.54c5.02-5.02,13.59-1.46,13.59,5.63Z"/>
+</svg>

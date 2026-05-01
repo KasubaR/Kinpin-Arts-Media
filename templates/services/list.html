@@ -8,10 +8,6 @@
 <link rel="stylesheet" href="{% static 'css/services.css' %}" />
 {% endblock %}
 
-{% block site_footer %}
-{% include 'services/partials/services_footer.html' %}
-{% endblock %}
-
 {% block content %}
 
   <section class="page-hero pt-28 pb-20 lg:pt-36 lg:pb-28">
@@ -153,7 +149,14 @@
       {% endif %}
 
       {% empty %}
-      <p class="font-body text-white/50 py-20">No services published yet. Add some in the admin.</p>
+      <div class="empty-state reveal">
+        <p class="empty-state__glyph font-display" aria-hidden="true">◌</p>
+        <p class="empty-state__title font-display">Our services are being updated. Check back soon.</p>
+        <p class="empty-state__hint font-body">
+          In the meantime, browse our <a href="{% url 'portfolio' %}">portfolio</a>
+          or <a href="{% url 'home' %}#contact">reach out directly</a>.
+        </p>
+      </div>
       {% endfor %}
 
     </div>

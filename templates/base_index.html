@@ -46,107 +46,14 @@
   </div>
   {% endif %}
 
-  <!-- NAV -->
-  <nav class="nav-blur fixed top-0 left-0 right-0 z-50">
-    <div class="nav-inner max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-18">
-
-      <a href="{% url 'home' %}" class="flex items-center group shrink-0">
-        <img src="{% static 'images/logo.svg' %}" alt="Kinpin Arts" width="280" height="56" class="h-14 w-auto max-w-[min(280px,52vw)] object-contain object-left" />
-      </a>
-
-      <ul class="hidden lg:flex items-center gap-8 font-body text-sm font-medium">
-        {% for link in nav_links %}
-        <li>
-          <a href="{{ link.href }}" class="transition-colors duration-200 relative group {% if nav_active_label == link.label %}text-white{% else %}text-white/70 hover:text-white{% endif %}">
-            {{ link.label }}
-            <span class="absolute -bottom-1 left-0 h-px grad-bg transition-all duration-300 {% if nav_active_label == link.label %}w-full{% else %}w-0 group-hover:w-full{% endif %}"></span>
-          </a>
-        </li>
-        {% endfor %}
-      </ul>
-
-      <a href="{% url 'home' %}#contact" class="hidden lg:inline-flex btn-primary text-white text-sm font-semibold px-6 py-2.5 rounded-full shadow-md">
-        Start a Project
-      </a>
-
-      <button type="button" id="site-nav-toggle" class="site-nav-toggle lg:hidden w-10 h-10 flex flex-col justify-center items-center gap-1.5 group" aria-expanded="false" aria-controls="site-mobile-menu" aria-label="Open menu">
-        <span class="site-nav-toggle-line block h-0.5 w-6 bg-white transition-all duration-300"></span>
-        <span class="site-nav-toggle-line block h-0.5 w-6 bg-white transition-all duration-300"></span>
-        <span class="site-nav-toggle-line block h-0.5 w-6 bg-white transition-all duration-300"></span>
-      </button>
-    </div>
-
-    <div id="site-mobile-menu" class="mobile-menu closed lg:hidden">
-      <div class="px-6 py-8 flex flex-col gap-6">
-        {% for link in nav_links %}
-        <a href="{{ link.href }}" class="site-mobile-link font-display text-2xl font-bold transition-colors {% if nav_active_label == link.label %}grad-text{% else %}text-white hover:grad-text{% endif %}">
-          {{ link.label }}
-        </a>
-        {% endfor %}
-        <a href="{% url 'home' %}#contact" class="site-mobile-link btn-primary text-white text-center font-semibold py-3 rounded-full mt-2">
-          Start a Project
-        </a>
-      </div>
-    </div>
-  </nav>
+  {% include 'partials/site_nav.html' %}
 
   <main>
     {% block content %}{% endblock %}
   </main>
 
   {% block site_footer %}
-  <footer class="site-footer border-t border-crimson/15 pt-16 pb-10">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10">
-
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-14">
-        <div class="lg:col-span-2">
-          <div class="mb-5">
-            <img src="{% static 'images/logo.svg' %}" alt="Kinpin Arts" width="320" height="64" class="h-16 w-auto max-w-[min(320px,90vw)] object-contain object-left" />
-          </div>
-          <p class="font-body text-white/40 text-sm leading-relaxed max-w-xs">
-            Full-service creative and digital agency based in Zambia. Turning visions into reality for 7+ years.
-          </p>
-          <div class="flex gap-4 mt-6">
-            {% for social in social_links %}
-            <a href="{{ social.href }}" target="_blank" rel="noopener noreferrer"
-               class="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center text-white/40 hover:text-white hover:border-crimson/50 transition-all duration-200 text-xs font-display font-bold">
-              {{ social.icon }}
-            </a>
-            {% endfor %}
-          </div>
-        </div>
-
-        <div>
-          <h5 class="font-display font-semibold text-white text-sm mb-5 uppercase tracking-widest">Services</h5>
-          <ul class="space-y-3">
-            {% for s in services|slice:":5" %}
-            <li>
-              <a href="{% url 'home' %}#services" class="font-body text-white/40 text-sm hover:text-white transition-colors">{{ s.title }}</a>
-            </li>
-            {% endfor %}
-          </ul>
-        </div>
-
-        <div>
-          <h5 class="font-display font-semibold text-white text-sm mb-5 uppercase tracking-widest">Company</h5>
-          <ul class="space-y-3">
-            {% for link in nav_links %}
-            <li>
-              <a href="{{ link.href }}" class="font-body text-white/40 text-sm hover:text-white transition-colors">{{ link.label }}</a>
-            </li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-
-      <div class="divider mb-8"></div>
-
-      <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
-        <p class="font-body text-white/30 text-xs">© {% now "Y" %} Kinpin Arts Media. All rights reserved.</p>
-        <p class="font-body text-white/20 text-xs">Registered in Zambia · Crafted with purpose.</p>
-      </div>
-    </div>
-  </footer>
+  {% include 'partials/site_footer.html' %}
   {% endblock %}
 
 </div>

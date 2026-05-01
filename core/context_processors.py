@@ -4,10 +4,9 @@ from services.models import Service
 def global_context(request):
     nav_links = [
         {'label': 'Home',      'href': '/'},
-        {'label': 'About',     'href': '/about/'},
         {'label': 'Services',  'href': '/services/'},
-        {'label': 'Portfolio', 'href': '/portfolio/'},
-        {'label': 'Contact',   'href': '/contact/'},
+        {'label': 'Our Work',  'href': '/portfolio/'},
+        {'label': 'About Us',  'href': '/about/'},
     ]
 
     social_links = [

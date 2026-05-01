@@ -178,7 +178,7 @@
       {% else %}
       <div class="empty-state reveal">
         <p class="empty-state__glyph font-display" aria-hidden="true">◌</p>
-        <p class="empty-state__title font-display">Portfolio projects will appear here once added in the admin.</p>
+        <p class="empty-state__title font-display">Our latest work is on its way.</p>
         <p class="empty-state__hint font-body">
           Browse <a href="{% url 'portfolio' %}">all work</a>
           or <a href="{% url 'home' %}#contact">get in touch</a>.
@@ -305,8 +305,8 @@
         <select name="service"
                 class="w-full px-5 py-4 rounded-xl font-body text-sm bg-white/10 border border-white/20 text-white focus:outline-none focus:border-white/50 transition-colors appearance-none cursor-pointer">
           <option value="" disabled selected>Service of Interest</option>
-          {% for s in services %}
-          <option value="{{ s.title }}">{{ s.title }}</option>
+          {% for name in service_names %}
+          <option value="{{ name }}">{{ name }}</option>
           {% endfor %}
         </select>
         <textarea name="message" placeholder="Tell us about your project..." rows="4" required

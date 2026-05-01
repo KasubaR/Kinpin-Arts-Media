@@ -1,0 +1,44 @@
+{% load static %}
+<header class="site-header">
+  <nav class="nav-blur fixed top-0 left-0 right-0 z-50">
+    <div class="nav-inner navbar max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-18">
+      <a href="{% url 'home' %}" class="brand flex items-center group shrink-0">
+        <img src="{% static 'images/logo.svg' %}" alt="Kinpin Arts" width="280" height="56" class="logo h-14 w-auto max-w-[min(280px,52vw)] object-contain object-left" />
+      </a>
+
+      <ul class="nav-links hidden lg:flex items-center gap-8 font-body text-sm font-medium">
+        {% for link in nav_links %}
+        <li>
+          <a href="{{ link.href }}" class="transition-colors duration-200 relative group {% if nav_active_label == link.label %}text-white{% else %}text-white/70 hover:text-white{% endif %}">
+            {{ link.label }}
+            <span class="absolute -bottom-1 left-0 h-px grad-bg transition-all duration-300 {% if nav_active_label == link.label %}w-full{% else %}w-0 group-hover:w-full{% endif %}"></span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+
+      <a href="{% url 'home' %}#contact" class="btn-cta hidden lg:inline-flex btn-primary text-white text-sm font-semibold px-6 py-2.5 rounded-full shadow-md">
+        Start a Project
+      </a>
+
+      <button type="button" id="site-nav-toggle" class="nav-toggle site-nav-toggle lg:hidden w-10 h-10 flex flex-col justify-center items-center gap-1.5 group" aria-expanded="false" aria-controls="site-mobile-menu" aria-label="Open menu">
+        <span class="site-nav-toggle-line block h-0.5 w-6 bg-white transition-all duration-300"></span>
+        <span class="site-nav-toggle-line block h-0.5 w-6 bg-white transition-all duration-300"></span>
+        <span class="site-nav-toggle-line block h-0.5 w-6 bg-white transition-all duration-300"></span>
+      </button>
+    </div>
+
+    <div id="site-mobile-menu" class="mobile-menu closed lg:hidden">
+      <div class="px-6 py-8 flex flex-col gap-6">
+        {% for link in nav_links %}
+        <a href="{{ link.href }}" class="site-mobile-link font-display text-2xl font-bold transition-colors {% if nav_active_label == link.label %}grad-text{% else %}text-white hover:grad-text{% endif %}">
+          {{ link.label }}
+        </a>
+        {% endfor %}
+        <a href="{% url 'home' %}#contact" class="site-mobile-link btn-primary text-white text-center font-semibold py-3 rounded-full mt-2">
+          Start a Project
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>

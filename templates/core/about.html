@@ -8,36 +8,6 @@
 <link rel="stylesheet" href="{% static 'css/about.css' %}" />
 {% endblock %}
 
-{% block site_footer %}
-<footer class="site-footer border-t border-crimson/15 pt-16 pb-10">
-  <div class="max-w-7xl mx-auto px-6 lg:px-10">
-    <div class="flex flex-col sm:flex-row justify-between items-start gap-10 pb-10 border-b border-white/10">
-      <div>
-        <img src="{% static 'images/logo.svg' %}" alt="Kinpin Arts" width="320" height="48" class="h-12 w-auto mb-4 opacity-90 object-contain object-left" />
-        <p class="font-body text-white/40 text-sm max-w-xs leading-relaxed">Full-service creative and digital agency based in Zambia. Turning visions into reality since 2017.</p>
-        <div class="flex gap-3 mt-5">
-          {% for s in social_links %}
-          <a href="{{ s.href }}" target="_blank" rel="noopener noreferrer"
-             class="w-9 h-9 rounded-full border border-white/15 flex items-center justify-center text-white/40 hover:text-white hover:border-crimson/50 transition-all text-xs font-display font-bold">
-            {{ s.icon }}
-          </a>
-          {% endfor %}
-        </div>
-      </div>
-      <div class="grid grid-cols-2 gap-x-16 gap-y-3">
-        {% for link in nav_links %}
-        <a href="{{ link.href }}" class="font-body text-white/40 text-sm hover:text-white transition-colors">{{ link.label }}</a>
-        {% endfor %}
-      </div>
-    </div>
-    <div class="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-      <p class="font-body text-white/25 text-xs">© {% now "Y" %} Kinpin Arts Media. All rights reserved.</p>
-      <p class="font-body text-white/20 text-xs">Registered in Zambia</p>
-    </div>
-  </div>
-</footer>
-{% endblock %}
-
 {% block content %}
 
   <section class="page-hero pt-28 pb-20 lg:pt-36 lg:pb-28">
@@ -142,6 +112,50 @@
         </div>
         {% endfor %}
       </div>
+
+      <p class="text-white/70 text-center mt-14 lg:mt-16 mb-10 lg:mb-12 reveal font-body text-sm">Trusted by businesses across Zambia and beyond</p>
+      <div class="client-marquee client-marquee--about reveal">
+        <div class="client-marquee-viewport">
+          <div class="client-marquee-track">
+            <div class="client-marquee-group">
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Africast.svg' %}" alt="Africast" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Amiran.svg' %}" alt="Amiran" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Bwacha MSS.svg' %}" alt="Bwacha MSS" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_FC.svg' %}" alt="FC" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_FF.svg' %}" alt="FF" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Frasmac.svg' %}" alt="Frasmac" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Lukanda.svg' %}" alt="Lukanda" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Mannock.svg' %}" alt="Mannock" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Metalock.svg' %}" alt="Metalock" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Mirai Media.svg' %}" alt="Mirai Media" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Ntumai.svg' %}" alt="Ntumai" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Qualitick.svg' %}" alt="Qualitick" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Skin Zm.svg' %}" alt="Skin Zm" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_ZDA.svg' %}" alt="ZDA" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_ZITHS.svg' %}" alt="ZITHS" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Zenith.svg' %}" alt="Zenith" /></div>
+            </div>
+            <div class="client-marquee-group" aria-hidden="true">
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Africast.svg' %}" alt="" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Amiran.svg' %}" alt="" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Bwacha MSS.svg' %}" alt="" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_FC.svg' %}" alt="" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_FF.svg' %}" alt="" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Frasmac.svg' %}" alt="" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Lukanda.svg' %}" alt="" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Mannock.svg' %}" alt="" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Metalock.svg' %}" alt="" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Mirai Media.svg' %}" alt="" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Ntumai.svg' %}" alt="" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Qualitick.svg' %}" alt="" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Skin Zm.svg' %}" alt="" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_ZDA.svg' %}" alt="" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_ZITHS.svg' %}" alt="" /></div>
+              <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Zenith.svg' %}" alt="" /></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -225,34 +239,6 @@
         {% endfor %}
       </div>
 
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <section class="section-dark py-20" style="background: rgba(51,20,55,0.1);">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10">
-      <div class="text-center mb-12 reveal">
-        <p class="text-white/35 text-sm font-body">Trusted by businesses across Zambia and beyond</p>
-      </div>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-x-12 gap-y-10 reveal">
-        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Africast.svg' %}" alt="Africast" /></div>
-        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Amiran.svg' %}" alt="Amiran" /></div>
-        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Bwacha MSS.svg' %}" alt="Bwacha MSS" /></div>
-        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_FC.svg' %}" alt="FC" /></div>
-        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_FF.svg' %}" alt="FF" /></div>
-        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Frasmac.svg' %}" alt="Frasmac" /></div>
-        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Lukanda.svg' %}" alt="Lukanda" /></div>
-        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Mannock.svg' %}" alt="Mannock" /></div>
-        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Metalock.svg' %}" alt="Metalock" /></div>
-        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Mirai Media.svg' %}" alt="Mirai Media" /></div>
-        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Ntumai.svg' %}" alt="Ntumai" /></div>
-        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Qualitick.svg' %}" alt="Qualitick" /></div>
-        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Skin Zm.svg' %}" alt="Skin Zm" /></div>
-        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_ZDA.svg' %}" alt="ZDA" /></div>
-        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_ZITHS.svg' %}" alt="ZITHS" /></div>
-        <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Zenith.svg' %}" alt="Zenith" /></div>
-      </div>
     </div>
   </section>
 

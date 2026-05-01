@@ -7,6 +7,7 @@ from apps.portfolio.models import Project
 from apps.services.models import Service, ServiceFeature
 
 from .models import ClientLogo, ContactInquiry, NewsletterSubscriber, Testimonial
+from .site_content import OFFICE_LOCATIONS
 
 PROCESS_STEPS = [
     {'title': 'Discovery', 'desc': 'Deep-dive into your brand, goals, and audience through research and consultation.'},
@@ -224,8 +225,8 @@ def home(request):
         'portfolio_tabs': portfolio_tabs,
         'process_steps': PROCESS_STEPS,
         'stats': STATS,
-        'clients': ClientLogo.objects.all(),
         'testimonial_cards': _testimonial_cards(),
+        'office_locations': OFFICE_LOCATIONS,
     }
     return render(request, 'core/home.html', context)
 
@@ -271,7 +272,7 @@ def contact(request):
             messages.success(request, "Thanks! We'll be in touch soon.")
             return redirect('contact')
         messages.error(request, 'Please fill in all required fields.')
-    return render(request, 'core/contact.html')
+    return render(request, 'core/contact.html', {'office_locations': OFFICE_LOCATIONS})
 
 
 def newsletter_subscribe(request):

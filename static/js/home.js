@@ -62,6 +62,34 @@
     activate(initial);
   }
 
+  function initScrollProgress() {
+    var root = document.querySelector('.scroll-progress');
+    var fill = root && root.querySelector('.scroll-progress__fill');
+    if (!fill) return;
+
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var el = document.documentElement;
+      var scrollable = el.scrollHeight - el.clientHeight;
+      var p = scrollable <= 0 ? 0 : el.scrollTop / scrollable;
+      if (p < 0) p = 0;
+      if (p > 1) p = 1;
+      fill.style.transform = 'scaleX(' + p + ')';
+    }
+
+    function onViewportChange() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    }
+
+    window.addEventListener('scroll', onViewportChange, { passive: true });
+    window.addEventListener('resize', onViewportChange, { passive: true });
+    update();
+  }
+
   function initScrollReveal() {
     var els = document.querySelectorAll('.reveal');
     if (!els.length || !('IntersectionObserver' in window)) {
@@ -95,6 +123,7 @@
   function initAll() {
     initMobileNav();
     initPortfolioTabs();
+    initScrollProgress();
     initScrollReveal();
   }
 })();

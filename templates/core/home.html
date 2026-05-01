@@ -203,27 +203,51 @@
         {% endfor %}
       </div>
 
-      {% if clients %}
       <div class="mt-16 lg:mt-20 pt-16 lg:pt-20 border-t border-white/10">
-        <div class="text-center mb-12 reveal">
-          <p class="font-body text-white text-base">Trusted by businesses across Zambia and beyond</p>
-        </div>
-
-        <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-8 items-center reveal">
-          {% for client in clients %}
-          <div class="flex items-center justify-center h-14 px-2">
-            {% if client.website %}
-            <a href="{{ client.website }}" target="_blank" rel="noopener noreferrer" class="block max-h-12 w-full">
-              <img src="{{ client.logo.url }}" alt="{{ client.name }}" class="client-logo max-h-12 w-auto mx-auto object-contain" />
-            </a>
-            {% else %}
-            <img src="{{ client.logo.url }}" alt="{{ client.name }}" class="client-logo max-h-12 w-auto mx-auto object-contain" />
-            {% endif %}
+        <p class="text-white/70 text-center mb-10 reveal font-body text-sm">Trusted by businesses across Zambia and beyond</p>
+        <div class="client-marquee client-marquee--about reveal">
+          <div class="client-marquee-viewport">
+            <div class="client-marquee-track">
+              <div class="client-marquee-group">
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Africast.svg' %}" alt="Africast" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Amiran.svg' %}" alt="Amiran" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Bwacha MSS.svg' %}" alt="Bwacha MSS" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_FC.svg' %}" alt="FC" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_FF.svg' %}" alt="FF" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Frasmac.svg' %}" alt="Frasmac" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Lukanda.svg' %}" alt="Lukanda" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Mannock.svg' %}" alt="Mannock" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Metalock.svg' %}" alt="Metalock" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Mirai Media.svg' %}" alt="Mirai Media" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Ntumai.svg' %}" alt="Ntumai" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Qualitick.svg' %}" alt="Qualitick" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Skin Zm.svg' %}" alt="Skin Zm" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_ZDA.svg' %}" alt="ZDA" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_ZITHS.svg' %}" alt="ZITHS" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Zenith.svg' %}" alt="Zenith" /></div>
+              </div>
+              <div class="client-marquee-group" aria-hidden="true">
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Africast.svg' %}" alt="" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Amiran.svg' %}" alt="" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Bwacha MSS.svg' %}" alt="" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_FC.svg' %}" alt="" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_FF.svg' %}" alt="" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Frasmac.svg' %}" alt="" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Lukanda.svg' %}" alt="" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Mannock.svg' %}" alt="" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Metalock.svg' %}" alt="" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Mirai Media.svg' %}" alt="" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Ntumai.svg' %}" alt="" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Qualitick.svg' %}" alt="" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Skin Zm.svg' %}" alt="" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_ZDA.svg' %}" alt="" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_ZITHS.svg' %}" alt="" /></div>
+                <div class="client-pill"><img src="{% static 'images/client-logos/Client Logos_Zenith.svg' %}" alt="" /></div>
+              </div>
+            </div>
           </div>
-          {% endfor %}
         </div>
       </div>
-      {% endif %}
     </div>
   </section>
 
@@ -316,9 +340,24 @@
         </button>
       </form>
 
-      <div class="mt-10 text-white/50 font-body text-sm">
-        Or email us directly at
-        <a href="mailto:info@kinpinarts.com" class="text-white underline hover:text-white/80">info@kinpinarts.com</a>
+      <div class="mt-10 max-w-xl mx-auto text-left space-y-6">
+        <div class="text-white/50 font-body text-sm text-center">
+          Or email us directly at
+          <a href="mailto:info@kinpinarts.com" class="text-white underline hover:text-white/80">info@kinpinarts.com</a>
+        </div>
+        <div class="border-t border-white/15 pt-8">
+          <p class="text-white/60 text-xs font-semibold tracking-widest uppercase mb-4 font-body text-center">Visit us</p>
+          <div class="grid sm:grid-cols-2 gap-8 text-sm font-body">
+            {% for loc in office_locations %}
+            <div>
+              <p class="text-crimson text-xs font-semibold uppercase tracking-wide mb-2">{{ loc.label }}</p>
+              {% for line in loc.lines %}
+              <p class="text-white/85 leading-relaxed">{{ line }}</p>
+              {% endfor %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
       </div>
     </div>
   </section>

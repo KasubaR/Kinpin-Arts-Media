@@ -42,6 +42,17 @@
             <div class="contact-info">
                 <h3>Let&rsquo;s Talk</h3>
                 <p>We work with clients across Zambia and beyond. Whether you have a fully formed brief or just an idea, we&rsquo;d love to hear from you.</p>
+                <div class="contact-addresses">
+                    <p class="contact-addresses-heading">Locations</p>
+                    {% for loc in office_locations %}
+                    <div class="contact-address-block">
+                        <p class="contact-address-block-title">{{ loc.label }}</p>
+                        {% for line in loc.lines %}
+                        <p class="contact-address-line">{{ line }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                </div>
                 <ul>
                     <li>Brand Identity &amp; Logo Design</li>
                     <li>Web Design &amp; Development</li>

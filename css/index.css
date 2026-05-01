@@ -52,6 +52,34 @@ body::before {
   border-bottom: 1px solid rgba(221,28,73,0.15);
 }
 
+/* Fixed scroll depth meter (fills → bottom of page, shrinks when scrolling up) */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 100;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.scroll-progress__fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  transform-origin: left center;
+  transform: scaleX(0);
+  will-change: transform;
+  background: linear-gradient(90deg, #dd1c49 0%, #331437 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress {
+    display: none;
+  }
+}
+
 /* Hero dot grid (masked) */
 .hero-dot-grid {
   background-image: radial-gradient(rgba(221, 28, 73, 0.15) 1px, transparent 1px);

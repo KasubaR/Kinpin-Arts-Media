@@ -214,11 +214,17 @@
 
           <div class="space-y-4">
             {% for item in contact_meta %}
-            <div class="flex items-center gap-3">
-              <span class="text-lg" aria-hidden="true">{{ item.icon }}</span>
+            <div class="flex items-start gap-3">
+              <span class="text-lg shrink-0 mt-0.5" aria-hidden="true">{{ item.icon }}</span>
               <div>
                 <p class="text-white/40 text-xs font-semibold tracking-wide uppercase font-body">{{ item.label }}</p>
-                <p class="text-white text-sm font-medium font-body">{{ item.value }}</p>
+                {% if item.lines %}
+                  {% for line in item.lines %}
+                  <p class="text-white text-sm font-medium font-body leading-snug">{{ line }}</p>
+                  {% endfor %}
+                {% else %}
+                  <p class="text-white text-sm font-medium font-body">{{ item.value }}</p>
+                {% endif %}
               </div>
             </div>
             {% endfor %}

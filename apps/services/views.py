@@ -3,15 +3,24 @@ from django.db.models import Prefetch
 from django.shortcuts import get_object_or_404, redirect, render
 
 from apps.core.models import ContactInquiry
+from apps.core.site_content import OFFICE_LOCATIONS
 from apps.core.views import PROCESS_STEPS, SOCIAL_LINKS, _nav_links
 
 from .models import Service, ServiceFeature
 
-SERVICES_CONTACT_META = [
-    {'icon': '📍', 'label': 'Location', 'value': 'Lusaka, Zambia'},
-    {'icon': '✉️', 'label': 'Email', 'value': 'hello@kinpinarts.com'},
-    {'icon': '📞', 'label': 'Phone', 'value': '+260 977 000 000'},
-]
+
+def _services_contact_meta():
+    meta = [
+        {'icon': '📍', 'label': loc['label'], 'lines': loc['lines']}
+        for loc in OFFICE_LOCATIONS
+    ]
+    meta.extend(
+        [
+            {'icon': '✉️', 'label': 'Email', 'value': 'hello@kinpinarts.com'},
+            {'icon': '📞', 'label': 'Phone', 'value': '+260 977 000 000'},
+        ]
+    )
+    return meta
 
 
 def _services_page_context():
@@ -21,7 +30,7 @@ def _services_page_context():
         'social_links': SOCIAL_LINKS,
         'nav_active_label': 'Services',
         'process_steps': PROCESS_STEPS,
-        'contact_meta': SERVICES_CONTACT_META,
+        'contact_meta': _services_contact_meta(),
         'services_for_footer': footer_qs,
     }
 

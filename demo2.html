@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Kinpin Arts Media — Bold Creative & Digital Agency</title>
+  <meta name="description" content="Kinpin Arts Media delivers vibrant brand identity, web design, motion graphics & social media in Zambia. Let's create something extraordinary." />
+  <link rel="preload" as="image" href="images/hero-keyboard.jpg" />
+
+  <!-- Tailwind CSS + Vue 3 + Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/fonts.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Helvena', 'system-ui', 'sans-serif'],
+            body: ['Helvena', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            crimson: '#dd1c49',
+            plum: '#331437',
+            ink: '#0d0610',
+            ash: '#f5f0f6',
+            mist: '#e8dff0',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    :root {
+      --grad: linear-gradient(135deg, #dd1c49 0%, #331437 100%);
+    }
+    .grad-bg {
+      background: var(--grad);
+    }
+    /* Match Django site_nav mobile link hover */
+    .grad-text {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    /* Footer / inline text links: same underline animation as desktop nav */
+    .nav-link-site {
+      transition: color 0.2s ease;
+    }
+    .nav-link-site .nav-link-site-line {
+      position: absolute;
+      left: 0;
+      bottom: -0.25rem;
+      height: 1px;
+      width: 0;
+      background: var(--grad);
+      transition: width 0.3s ease;
+    }
+    .nav-link-site:hover .nav-link-site-line {
+      width: 100%;
+    }
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(221, 28, 73, 0.3), transparent);
+    }
+    /* custom config & base overrides */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #fefbf7;
+      color: #1a1025;
+      overflow-x: hidden;
+    }
+    /* subtle grain-free, light friendly texture */
+    .light-bg-grain {
+      background-image: radial-gradient(rgba(220, 38, 78, 0.02) 1.2px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    .grad-primary {
+      background: linear-gradient(125deg, #E11D48 0%, #BE185D 40%, #6B21A5 100%);
+    }
+    .grad-text-primary {
+      background: linear-gradient(125deg, #E11D48, #BE185D, #6B21A5);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .btn-primary {
+      background: linear-gradient(105deg, #E11D48, #BE185D);
+      transition: all 0.25s ease;
+      box-shadow: 0 8px 20px -6px rgba(225, 29, 72, 0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 28px -8px rgba(225, 29, 72, 0.4);
+      filter: brightness(1.02);
+    }
+    .btn-outline-light {
+      border: 1.5px solid #E11D48;
+      background: transparent;
+      transition: all 0.2s;
+    }
+    .btn-outline-light:hover {
+      background: rgba(225, 29, 72, 0.08);
+      border-color: #BE185D;
+    }
+    /* Layout: two cards per row from 900px up, 320px min height — matches demo3 */
+    .card-service {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1.75rem;
+      isolation: isolate;
+      transition: transform 0.45s ease, box-shadow 0.45s ease, border-color 0.3s ease;
+      box-shadow: 0 12px 32px -12px rgba(51, 20, 55, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      min-height: 320px;
+    }
+    .card-service-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transform: scale(1);
+      transition: transform 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .card-service:hover .card-service-bg {
+      transform: scale(1.07);
+    }
+    .card-service-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        165deg,
+        rgba(221, 28, 73, 0.24) 0%,
+        rgba(51, 20, 55, 0.42) 40%,
+        rgba(51, 20, 55, 0.93) 100%
+      );
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .card-service:hover .card-service-overlay {
+      opacity: 0.92;
+    }
+    .card-service:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 255, 255, 0.22);
+      box-shadow: 0 28px 56px -18px rgba(51, 20, 55, 0.45);
+    }
+    .card-process {
+      min-height: 280px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .card-service-bg {
+        transition: none;
+      }
+      .card-service:hover .card-service-bg {
+        transform: none;
+      }
+      .card-service {
+        transition: none;
+      }
+      .card-service:hover {
+        box-shadow: 0 12px 32px -12px rgba(51, 20, 55, 0.35);
+      }
+    }
+    .testimonial-card {
+      background: #ffffff;
+      border-radius: 2rem;
+      border: 1px solid #f0e6ed;
+      transition: all 0.2s;
+    }
+    .testimonial-card:hover {
+      border-color: #E11D48;
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.08);
+    }
+    /* Portfolio — same behavior as index.html */
+    .portfolio-item {
+      overflow: hidden;
+      position: relative;
+    }
+    .portfolio-inner {
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 100%;
+      height: 100%;
+    }
+    .portfolio-item:hover .portfolio-inner {
+      transform: scale(1.06);
+    }
+    .portfolio-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13, 6, 16, 0.9) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      display: flex;
+      align-items: flex-end;
+      padding: 1.5rem;
+    }
+    .portfolio-item:hover .portfolio-overlay {
+      opacity: 1;
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.2, 0.7, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .nav-blur {
+      background: rgba(254, 251, 247, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(225, 29, 72, 0.15);
+    }
+    .mobile-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #fffaf7;
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(225, 29, 72, 0.2);
+      transition: transform 0.3s ease, opacity 0.25s ease, visibility 0.2s;
+      transform-origin: top;
+    }
+    .mobile-menu.closed {
+      transform: scaleY(0);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .mobile-menu.open {
+      transform: scaleY(1);
+      opacity: 1;
+      visibility: visible;
+    }
+    .stat-number {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .hero-gradient-bg {
+      background-color: #fff9f5;
+      position: relative;
+      isolation: isolate;
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    .hero-photo-layer {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 0;
+      width: 100%;
+      min-height: 100%;
+      overflow: hidden;
+      background-color: #fff9f5;
+      pointer-events: none;
+    }
+
+    .hero-photo-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 42%;
+    }
+
+    /* Rotating rings + spin — same motion as index.html (inner spins, outer handles layout) */
+    .hero-ring {
+      border: 1px solid rgba(225, 29, 72, 0.28);
+      border-radius: 50%;
+      animation: hero-spin-slow 28s linear infinite;
+    }
+    .hero-ring-2 {
+      border: 1px solid rgba(124, 58, 237, 0.22);
+      border-radius: 50%;
+      animation: hero-spin-slow 20s linear infinite reverse;
+    }
+    @keyframes hero-spin-slow {
+      to { transform: rotate(360deg); }
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1e6df;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #E11D48;
+      border-radius: 8px;
+    }
+    h1, h2, h3, .font-display {
+      letter-spacing: -0.02em;
+    }
+    .client-chip {
+      background: #f9f1f0;
+      border-radius: 100px;
+      transition: all 0.2s;
+    }
+    .client-chip:hover {
+      background: #E11D48;
+      color: white !important;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- NAVBAR - Light, minimal -->
+  <nav class="nav-blur fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-[70px]">
+      <a href="#" class="flex items-center self-stretch shrink-0 min-w-0">
+        <img src="logo2.svg" alt="Kinpin Arts" width="240" height="56" class="h-12 w-auto max-h-[70px] max-w-[min(240px,55vw)] object-contain object-left" />
+      </a>
+
+      <!-- Desktop links — same hover + grad underline as templates/partials/site_nav.html -->
+      <ul class="hidden lg:flex items-center gap-8 text-sm font-medium">
+        <li v-for="link in navLinks" :key="link.label">
+          <a :href="link.href" class="relative group py-1 text-gray-600 transition-colors duration-200 hover:text-plum">
+            {{ link.label }}
+            <span class="absolute -bottom-1 left-0 h-px w-0 grad-bg transition-all duration-300 group-hover:w-full"></span>
+          </a>
+        </li>
+      </ul>
+
+      <a href="#contact" class="hidden lg:inline-flex btn-primary text-white text-sm font-semibold px-6 py-2.5 rounded-full shadow-md">Start a Project</a>
+
+      <!-- hamburger -->
+      <button @click="menuOpen = !menuOpen" class="lg:hidden w-9 h-9 flex flex-col justify-center items-center gap-1.5">
+        <span class="block h-0.5 w-5 transition-all duration-300" :class="menuOpen ? 'bg-rose-600 rotate-45 translate-y-1.5' : 'bg-gray-800'"></span>
+        <span class="block h-0.5 w-5 transition-all duration-300" :class="menuOpen ? 'opacity-0' : 'bg-gray-800'"></span>
+        <span class="block h-0.5 w-5 transition-all duration-300" :class="menuOpen ? 'bg-rose-600 -rotate-45 -translate-y-1.5' : 'bg-gray-800'"></span>
+      </button>
+    </div>
+
+    <!-- mobile menu -->
+    <div class="mobile-menu lg:hidden" :class="menuOpen ? 'open' : 'closed'">
+      <div class="px-6 py-8 flex flex-col gap-5">
+        <a v-for="link in navLinks" :key="link.label" :href="link.href" @click="menuOpen=false" class="font-display font-bold text-gray-800 text-2xl transition-colors duration-200 hover:grad-text">
+          {{ link.label }}
+        </a>
+        <a href="#contact" @click="menuOpen=false" class="btn-primary text-white text-center font-semibold py-3 rounded-full mt-2">Start a Project</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION - Light, vibrant, high contrast -->
+  <section class="hero-gradient-bg relative min-h-screen flex items-center pt-28 overflow-hidden">
+    <div class="hero-photo-layer" aria-hidden="true">
+      <img class="hero-photo-img" src="images/hero-keyboard.jpg" alt="" width="1920" height="1080" decoding="async" fetchpriority="high" />
+    </div>
+    <!-- Decorative rings (same layout as index.html) -->
+    <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/3 w-[700px] h-[700px] pointer-events-none opacity-40 z-[2]">
+      <div class="w-full h-full hero-ring"></div>
+    </div>
+    <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 w-[500px] h-[500px] pointer-events-none opacity-30 z-[2]">
+      <div class="w-full h-full hero-ring-2"></div>
+    </div>
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 w-full py-16 lg:py-24 relative z-10">
+      <div class="max-w-3xl">
+        <h1 class="text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight text-black leading-[1.05] mb-6">
+          We Build<br/>
+          Brands<br/>
+          That Last.
+        </h1>
+
+        <p class="text-lg text-black max-w-lg leading-relaxed mb-10">
+          Over 7 years of turning bold visions into unforgettable brand experiences — from identity design to web, motion, and beyond.
+        </p>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="#services" class="btn-primary text-white font-semibold px-8 py-3.5 rounded-full shadow-md">Explore Services</a>
+          <a href="#works" class="btn-outline-light text-rose-700 font-semibold px-8 py-3.5 rounded-full">Our Work ↗</a>
+        </div>
+      </div>
+    </div>
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-50 z-10">
+      <span class="text-[11px] font-medium text-gray-500">Scroll</span>
+      <div class="w-px h-10 bg-gradient-to-b from-rose-500 to-transparent"></div>
+    </div>
+  </section>
+
+  <!-- SERVICES SECTION (light cards) -->
+  <section id="services" class="py-24 lg:py-32 bg-white">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="mb-16 reveal">
+        <div>
+          <div class="text-rose-600 text-sm font-bold uppercase tracking-wider mb-3">What We Do</div>
+          <h2 class="text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight">Empowering Brands<br/>Through Design</h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 min-[900px]:grid-cols-2 gap-5">
+        <div
+          v-for="(service, idx) in services"
+          :key="service.title"
+          class="card-service reveal flex flex-col"
+          :style="{ transitionDelay: (idx * 40) + 'ms' }"
+        >
+          <div
+            class="card-service-bg"
+            :style="{ backgroundImage: 'url(' + JSON.stringify(service.image) + ')' }"
+          ></div>
+          <div class="card-service-overlay" aria-hidden="true"></div>
+          <div class="relative z-10 p-7 flex flex-col flex-1 justify-between min-h-[320px]">
+            <div>
+              <div class="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-sm border border-white/25 flex items-center justify-center text-2xl mb-5 text-white shadow-sm">
+                {{ service.icon }}
+              </div>
+              <h3 class="font-bold text-xl text-white mb-2 drop-shadow-sm">{{ service.title }}</h3>
+              <p class="text-white/80 text-sm leading-relaxed mb-4">{{ service.desc }}</p>
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span v-for="tag in service.tags" :key="tag" class="text-xs font-medium text-white/95 bg-white/10 border border-white/15 rounded-full px-3 py-1">{{ tag }}</span>
+              </div>
+            </div>
+            <a href="#contact" class="flex items-center gap-1 text-white text-sm font-semibold group w-fit">
+              Get a Quote <span class="transition-transform group-hover:translate-x-1">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS — image cards (aligned with services) -->
+  <section class="py-24 lg:py-32 bg-rose-50/30">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-14 lg:mb-16 reveal">
+        <div class="text-rose-600 text-sm font-bold uppercase tracking-wider">How We Work</div>
+        <h2 class="text-4xl lg:text-5xl font-extrabold text-gray-900 mt-2">Our Creative Workflow</h2>
+        <p class="text-gray-500 text-sm sm:text-base max-w-2xl mx-auto mt-4">From first conversation to launch — a clear path at every stage.</p>
+      </div>
+      <div class="grid grid-cols-1 min-[900px]:grid-cols-2 gap-5 lg:gap-6">
+        <div
+          v-for="(step, i) in process"
+          :key="step.title"
+          class="card-service card-process reveal flex flex-col"
+          :style="{ transitionDelay: (i * 50) + 'ms' }"
+        >
+          <div
+            class="card-service-bg"
+            :style="{ backgroundImage: 'url(' + JSON.stringify(step.image) + ')' }"
+          ></div>
+          <div class="card-service-overlay" aria-hidden="true"></div>
+          <div class="relative z-10 p-7 flex flex-col flex-1 justify-between min-h-[280px]">
+            <div>
+              <div class="flex items-center gap-3 mb-5">
+                <span class="inline-flex items-center justify-center min-w-[3rem] h-12 px-3 rounded-2xl bg-white/15 backdrop-blur-sm border border-white/25 text-white font-black text-lg tracking-tight shadow-sm tabular-nums">
+                  {{ String(i + 1).padStart(2, '0') }}
+                </span>
+                <span class="text-xs font-semibold uppercase tracking-widest text-white/70">Phase</span>
+              </div>
+              <h3 class="font-bold text-xl text-white mb-2 drop-shadow-sm">{{ step.title }}</h3>
+              <p class="text-white/85 text-sm leading-relaxed">{{ step.desc }}</p>
+            </div>
+            <div class="pt-4 mt-2 border-t border-white/15">
+              <span class="text-xs text-white/55 font-medium">Step {{ i + 1 }} of 4</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-12 lg:mt-14 text-center">
+        <a href="#contact" class="btn-primary inline-block text-white font-semibold px-8 py-3.5 rounded-full shadow-md">Schedule a Consultation</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO — layout matches index.html; background stays light -->
+  <section id="works" class="py-24 lg:py-36 bg-white">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 reveal">
+        <div>
+          <div class="text-crimson text-sm font-display font-semibold uppercase tracking-widest mb-4">Selected Works</div>
+          <h2 class="font-display font-bold text-gray-900" style="font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: -0.02em;">
+            Elevating Brands<br/>With Design
+          </h2>
+        </div>
+        <a href="https://www.behance.net/KinpinArts" target="_blank"
+           class="inline-flex items-center justify-center border border-gray-300 text-gray-800 font-display font-semibold px-7 py-3 rounded-full text-sm flex-shrink-0 cursor-pointer hover:border-crimson/50 hover:text-crimson transition-colors">
+          View All Work ↗
+        </a>
+      </div>
+
+      <div class="flex flex-wrap gap-3 mb-10 reveal">
+        <button v-for="tab in portfolioTabs" :key="tab"
+                @click="activeTab = tab"
+                class="font-body text-sm px-5 py-2 rounded-full border transition-all duration-200 cursor-pointer"
+                :class="activeTab === tab
+                  ? 'bg-crimson border-crimson text-white font-medium'
+                  : 'border-gray-300 text-gray-600 hover:border-crimson/40 hover:text-gray-900'">
+          {{ tab }}
+        </button>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+        <div v-for="(item, i) in filteredPortfolio" :key="item.title"
+             class="portfolio-item rounded-xl cursor-pointer reveal"
+             :class="i === 0 ? 'col-span-2 row-span-1' : ''"
+             :style="'aspect-ratio: ' + (i===0 ? '2/1' : '1/1') + '; transition-delay:' + (i*60) + 'ms'">
+          <div
+            class="portfolio-inner w-full h-full rounded-xl"
+            :style="{ backgroundImage: 'url(' + JSON.stringify(item.image) + ')', backgroundSize: 'cover', backgroundPosition: 'center' }"
+          ></div>
+          <div class="portfolio-overlay rounded-xl">
+            <div>
+              <div class="flex gap-2 mb-2 flex-wrap">
+                <span v-for="cat in item.categories" :key="cat" class="text-xs font-body text-crimson bg-crimson/20 rounded-full px-2 py-0.5">{{ cat }}</span>
+              </div>
+              <div class="font-display font-bold text-white text-base">{{ item.title }}</div>
+              <div class="text-white/50 text-xs font-body">{{ item.year }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS section light style -->
+  <section class="py-16 bg-rose-50/40">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div v-for="(stat, i) in stats" :key="stat.label" class="text-center reveal" :style="'transition-delay:'+(i*60)+'ms'">
+          <div class="stat-number grad-text-primary font-black">{{ stat.value }}</div>
+          <div class="font-bold text-gray-800 text-sm mt-2">{{ stat.label }}</div>
+          <div class="text-gray-400 text-xs mt-1">{{ stat.sub }}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIENTS - vibrant chips -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-12 reveal">
+        <div class="text-rose-600 text-sm font-bold uppercase tracking-wider">Who We Serve</div>
+        <p class="text-gray-500 mt-2">Trusted by forward-thinking brands across Zambia and beyond</p>
+      </div>
+      <div class="flex flex-wrap justify-center gap-3 reveal">
+        <span v-for="client in clients" :key="client" class="client-chip px-5 py-2 text-gray-700 font-medium text-sm transition-colors cursor-default">{{ client }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS LIGHT -->
+  <section class="py-24 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="text-center mb-16 reveal">
+        <div class="text-rose-600 text-sm font-bold uppercase tracking-wider">Client Stories</div>
+        <h2 class="text-4xl lg:text-5xl font-extrabold text-gray-900 mt-2">What Our Clients Say</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-7">
+        <div v-for="t in testimonials" :key="t.name" class="testimonial-card p-8 reveal">
+          <div class="text-5xl font-black text-rose-200 leading-none mb-2">"</div>
+          <p class="text-gray-700 text-base leading-relaxed mb-6 italic">{{ t.quote }}</p>
+          <div class="flex items-center gap-4">
+            <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-rose-400 to-fuchsia-500 text-white flex items-center justify-center font-bold text-sm shadow-sm">{{ t.initials }}</div>
+            <div>
+              <div class="font-bold text-gray-800">{{ t.name }}</div>
+              <div class="text-gray-400 text-xs">{{ t.title }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER section light modern -->
+  <section class="py-20 bg-white">
+    <div class="max-w-2xl mx-auto px-6 text-center reveal">
+      <div class="text-rose-600 text-sm font-bold uppercase tracking-wider mb-3">Stay Connected</div>
+      <h3 class="text-3xl lg:text-4xl font-extrabold text-gray-900 mb-3">Get Design Insights<br/>Delivered to You</h3>
+      <p class="text-gray-500 mb-7">Brand tips, project showcases & agency updates — straight to your inbox.</p>
+      <form @submit.prevent="subscribeNewsletter" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+        <input v-model="email" type="email" placeholder="your@email.com" required class="flex-1 px-5 py-3.5 rounded-full border border-gray-300 bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-rose-400 transition-all text-sm">
+        <button type="submit" class="btn-primary text-white font-semibold px-7 py-3.5 rounded-full text-sm whitespace-nowrap shadow-sm">Subscribe →</button>
+      </form>
+      <p v-if="subscribed" class="mt-4 text-sm font-medium text-rose-600">✓ You're in! We'll be in touch.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT / CTA — matches index.html -->
+  <section id="contact" class="py-24 lg:py-36 relative overflow-hidden">
+    <div class="absolute inset-0 grad-bg opacity-95"></div>
+    <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 80% at 20% 50%, rgba(255,255,255,0.06) 0%, transparent 60%)"></div>
+    <div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px); background-size: 32px 32px;"></div>
+
+    <div class="relative z-10 max-w-4xl mx-auto px-6 lg:px-10 text-center">
+      <div class="text-white/60 text-sm font-display font-semibold uppercase tracking-widest mb-6">Ready to Begin?</div>
+      <h2 class="font-display font-black text-white mb-6" style="font-size: clamp(2.5rem, 7vw, 5.5rem); line-height: 0.96; letter-spacing: -0.03em;">
+        Let's Build Something<br/>Extraordinary.
+      </h2>
+      <p class="font-body text-white/70 text-lg mb-10 max-w-lg mx-auto">
+        Tell us about your project and we'll get back to you within 24 hours.
+      </p>
+
+      <form @submit.prevent="submitContact" class="max-w-xl mx-auto space-y-4 text-left">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <input v-model="contact.name" type="text" placeholder="Your Name" required
+                 class="w-full px-5 py-4 rounded-xl font-body text-sm bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white/50 transition-colors" />
+          <input v-model="contact.email" type="email" placeholder="Email Address" required
+                 class="w-full px-5 py-4 rounded-xl font-body text-sm bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white/50 transition-colors" />
+        </div>
+        <select v-model="contact.service"
+                class="w-full px-5 py-4 rounded-xl font-body text-sm bg-white/10 border border-white/20 text-white focus:outline-none focus:border-white/50 transition-colors appearance-none cursor-pointer">
+          <option value="" disabled class="bg-ink text-white/80">Service of Interest</option>
+          <option v-for="s in services" :key="s.title" :value="s.title" class="bg-ink">{{ s.title }}</option>
+        </select>
+        <textarea v-model="contact.message" placeholder="Tell us about your project..." rows="4" required
+                  class="w-full px-5 py-4 rounded-xl font-body text-sm bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-white/50 transition-colors resize-none"></textarea>
+        <button type="submit" class="w-full bg-white text-plum font-display font-bold py-4 rounded-xl text-base hover:bg-white/90 transition-all duration-200 cursor-pointer">
+          Send Message →
+        </button>
+      </form>
+
+      <p v-if="contactSent" class="mt-6 text-white font-body">
+        ✓ Message sent! We'll be in touch soon.
+      </p>
+
+      <div class="mt-10 text-white/50 font-body text-sm">
+        Or email us directly at
+        <a href="mailto:info@kinpinarts.com" class="text-white underline hover:text-white/80">info@kinpinarts.com</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER — light -->
+  <footer class="border-t border-rose-100 pt-16 pb-8 bg-white">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <div class="lg:col-span-2">
+          <div class="mb-4">
+            <img src="logo2.svg" alt="Kinpin Arts" width="260" height="64" class="h-14 w-auto max-w-[min(280px,85vw)] object-contain object-left" />
+          </div>
+          <p class="text-gray-500 text-sm max-w-xs leading-relaxed">Full-service creative and digital agency based in Zambia. Turning visions into reality for 7+ years.</p>
+          <div class="flex gap-4 mt-6">
+            <a v-for="social in socials" :key="social.name" :href="social.href" target="_blank" class="w-9 h-9 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 hover:text-rose-600 hover:border-rose-300 transition text-xs font-bold">{{ social.icon }}</a>
+          </div>
+        </div>
+        <div>
+          <h5 class="font-bold text-gray-800 text-sm mb-4 uppercase tracking-wider">Services</h5>
+          <ul class="space-y-2">
+            <li v-for="s in services.slice(0,5)" :key="s.title"><a href="#services" class="nav-link-site relative inline-block text-gray-500 text-sm hover:text-plum">{{ s.title }}<span class="nav-link-site-line" aria-hidden="true"></span></a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold text-gray-800 text-sm mb-4 uppercase tracking-wider">Company</h5>
+          <ul class="space-y-2">
+            <li v-for="link in navLinks" :key="link.label"><a :href="link.href" class="nav-link-site relative inline-block text-gray-500 text-sm hover:text-plum">{{ link.label }}<span class="nav-link-site-line" aria-hidden="true"></span></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-200 pt-7 flex flex-col sm:flex-row justify-between items-center gap-3">
+        <p class="text-gray-400 text-xs">© 2025 Kinpin Arts Media. All rights reserved.</p>
+        <p class="text-gray-400 text-xs">Registered in Zambia · Crafted with purpose.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+const { createApp } = Vue;
+
+createApp({
+  data() {
+    return {
+      menuOpen: false,
+      activeTab: 'All',
+      email: '',
+      subscribed: false,
+      contactSent: false,
+      contact: { name: '', email: '', service: '', message: '' },
+      navLinks: [
+        { label: 'Home', href: '#' },
+        { label: 'About', href: '#about' },
+        { label: 'Services', href: '#services' },
+        { label: 'Our Work', href: '#works' },
+        { label: 'Contact', href: '#contact' },
+      ],
+      services: [
+        { icon: '✦', title: 'Brand Identity Design', desc: 'Logos, colour systems & full brand guidelines.', tags: ['Logo Design', 'Brand Guidelines'], image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=900&auto=format&fit=crop&q=80' },
+        { icon: '⬡', title: 'Web Design & Development', desc: 'Modern, fast & responsive websites.', tags: ['UI/UX', 'Laravel', 'E-commerce'], image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&auto=format&fit=crop&q=80' },
+        { icon: '◈', title: 'Event Branding', desc: 'Immersive event experiences & digital graphics.', tags: ['Event Logos', 'Signage'], image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&auto=format&fit=crop&q=80' },
+        { icon: '◉', title: 'Social Media Management', desc: 'Strategy, content & ads management.', tags: ['Strategy', 'Content', 'Ads'], image: 'https://images.unsplash.com/photo-1611162616305-69e3e44047a6?w=900&auto=format&fit=crop&q=80' },
+        { icon: '▣', title: 'Motion Graphics & Video', desc: 'Explainer videos & cinematic coverage.', tags: ['Animation', 'Corporate Video'], image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=900&auto=format&fit=crop&q=80' },
+        { icon: '⬘', title: 'Print & Digital Marketing', desc: 'Flyers, brochures & targeted campaigns.', tags: ['Print Design', 'Ads'], image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=900&auto=format&fit=crop&q=80' },
+        { icon: '◌', title: 'Photography & Videography', desc: 'Product & corporate shoots.', tags: ['Events', 'Products'], image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=900&auto=format&fit=crop&q=80' },
+        { icon: '❖', title: 'Consulting & Strategy', desc: 'Brand positioning & digital transformation.', tags: ['Strategy', 'Creative Direction'], image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=900&auto=format&fit=crop&q=80' },
+        { icon: '◭', title: 'Integrated Solutions', desc: 'Full creative ecosystem builds.', tags: ['Consulting', 'Integration'], image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&auto=format&fit=crop&q=80' },
+      ],
+      process: [
+        { title: 'Discovery', desc: 'Deep-dive into brand, goals & audience — research, workshops, and a shared creative brief.', image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&auto=format&fit=crop&q=80' },
+        { title: 'Design', desc: 'Compelling visual concepts, iterations, and systems aligned with your identity.', image: 'https://images.unsplash.com/photo-1561070791-d36c1da7d898?w=900&auto=format&fit=crop&q=80' },
+        { title: 'Development', desc: 'Responsive, accessible builds — polished interactions and performance in mind.', image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=900&auto=format&fit=crop&q=80' },
+        { title: 'Launch & Support', desc: 'Flawless handoff, go-live support, and guidance as your brand grows.', image: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=900&auto=format&fit=crop&q=80' },
+      ],
+      portfolioTabs: ['All', 'Branding', 'Web Design', 'Events', 'Print'],
+      portfolio: [
+        { title: 'Magnox Investments', year: '2024', categories: ['Branding'], image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=1200&auto=format&fit=crop&q=80' },
+        { title: 'Zenith Corporate', year: '2024', categories: ['Branding', 'Print'], image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=1200&auto=format&fit=crop&q=80' },
+        { title: 'Africast Media', year: '2024', categories: ['Web Design'], image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&auto=format&fit=crop&q=80' },
+        { title: 'ZDA Event', year: '2023', categories: ['Events'], image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&auto=format&fit=crop&q=80' },
+        { title: 'Ecobank Campaign', year: '2023', categories: ['Branding', 'Print'], image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad188?w=1200&auto=format&fit=crop&q=80' },
+      ],
+      stats: [
+        { value: '7+', label: 'Years of Experience', sub: 'Creative industry' },
+        { value: '100+', label: 'Projects Delivered', sub: 'All service areas' },
+        { value: '98%', label: 'Client Satisfaction', sub: 'Long-term partnerships' },
+        { value: '13+', label: 'Active Clients', sub: 'Zambia & beyond' },
+      ],
+      clients: ['FC Bwacha', 'Skin Sensation', 'Zenith', 'Access Bank', 'Africast', 'ZDA', 'Amiran', 'Ecobank', 'Mannock', 'Lukanda', 'Ntumai', 'Freedom'],
+      testimonials: [
+        { quote: "Working with Kinpin Arts was a game-changer. The new website exceeded expectations in design and functionality.", name: 'Jerome Bell', title: 'CTO, Waverio', initials: 'JB' },
+        { quote: "Kinpin Arts delivered a stunning brand identity that reflects our essence. Their creative vision is second to none.", name: 'Wade Warren', title: 'Founder, Creaty', initials: 'WW' },
+      ],
+      socials: [
+        { name: 'Be', icon: 'Be', href: 'https://www.behance.net/KinpinArts' },
+        { name: 'IG', icon: 'IG', href: '#' },
+        { name: 'LI', icon: 'in', href: '#' },
+        { name: 'X', icon: 'X', href: '#' },
+      ],
+    };
+  },
+  computed: {
+    filteredPortfolio() {
+      if (this.activeTab === 'All') return this.portfolio;
+      return this.portfolio.filter(p => p.categories.includes(this.activeTab));
+    }
+  },
+  methods: {
+    subscribeNewsletter() { this.subscribed = true; this.email = ''; setTimeout(() => this.subscribed = false, 3000); },
+    submitContact() { this.contactSent = true; this.contact = { name: '', email: '', service: '', message: '' }; setTimeout(() => this.contactSent = false, 4000); },
+    initScrollReveal() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }
+  },
+  mounted() { this.$nextTick(() => this.initScrollReveal()); }
+}).mount('#app');
+</script>
+</body>
+</html>

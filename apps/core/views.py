@@ -1,6 +1,8 @@
 import datetime
 
+from django.conf import settings
 from django.contrib import messages
+from django.core.mail import send_mail
 from django.db.models import Prefetch
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -19,9 +21,8 @@ PROCESS_STEPS = [
 ]
 
 def _get_stats():
-    years = datetime.date.today().year - 2017
     return [
-        {'value': f'{years}+', 'label': 'Years of Experience', 'sub': 'In the creative industry'},
+        {'value': '5+', 'label': 'Years of Experience', 'sub': 'In the creative industry'},
         {'value': '100+', 'label': 'Projects Delivered', 'sub': 'Across all service areas'},
         {'value': '98%', 'label': 'Client Satisfaction', 'sub': 'Long-term partnerships'},
         {'value': '13+', 'label': 'Active Clients', 'sub': 'Zambia & beyond'},
@@ -208,6 +209,13 @@ def home(request):
                 subject=subject,
                 message=message,
             )
+            send_mail(
+                subject=f'New inquiry: {subject}',
+                message=f'Name: {name}\nEmail: {email}\nService: {service}\n\n{message}',
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[settings.CONTACT_EMAIL],
+                fail_silently=True,
+            )
             messages.success(request, "Thanks! We'll be in touch soon.")
             return redirect('home')
         messages.error(request, 'Please fill in all required fields.')
@@ -282,6 +290,13 @@ def contact(request):
                 phone=phone,
                 subject=subject,
                 message=message,
+            )
+            send_mail(
+                subject=f'New inquiry: {subject}',
+                message=f'Name: {name}\nEmail: {email}\nPhone: {phone}\nSubject: {subject}\n\n{message}',
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[settings.CONTACT_EMAIL],
+                fail_silently=True,
             )
             messages.success(request, "Thanks! We'll be in touch soon.")
             return redirect('contact')

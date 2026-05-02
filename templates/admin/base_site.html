@@ -1,0 +1,17 @@
+{% extends "admin/base.html" %}
+{% load i18n static %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Kinpin Arts admin') }}{% endblock %}
+
+{% block branding %}
+<div id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Kinpin Arts') }}</a></div>
+{% if site_url %}
+<a href="{{ site_url }}" class="kinpin-admin-view-site">{% translate 'View site' %}</a>
+{% endif %}
+{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/fonts.css' %}">
+<link rel="stylesheet" href="{% static 'admin/css/kinpin_admin.css' %}">
+{% endblock %}

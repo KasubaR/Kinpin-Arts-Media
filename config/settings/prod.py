@@ -14,9 +14,11 @@ ALLOWED_HOSTS = [
     if h.strip()
 ]
 
+# HTTPS admin/forms: CSRF checks Origin/Referer against these hosts (Django 4.x).
 CSRF_TRUSTED_ORIGINS = [
-    'https://kinpinarts.com',
-    'https://www.kinpinarts.com',
+    f'https://{h}'
+    for h in ALLOWED_HOSTS
+    if h and h != '*'
 ]
 
 DATABASES = {

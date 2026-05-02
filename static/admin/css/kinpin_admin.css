@@ -1,0 +1,455 @@
+/**
+ * Kinpin Arts — Django admin theme (aligned with public site: ink, plum, crimson, Helvena).
+ */
+
+:root {
+  --ka-ink: #0d0610;
+  --ka-plum: #331437;
+  --ka-crimson: #dd1c49;
+  --ka-ash: #f5f0f6;
+  --ka-mist: #e8dff0;
+  --ka-muted: rgba(245, 240, 246, 0.62);
+  --ka-surface: #140f17;
+  --ka-elevated: #1a141f;
+  --ka-border: rgba(221, 28, 73, 0.28);
+  --ka-border-soft: rgba(232, 223, 240, 0.12);
+  --ka-grad: linear-gradient(135deg, #dd1c49 0%, #331437 100%);
+}
+
+html[data-theme="auto"],
+html[data-theme="dark"],
+html[data-theme="light"] {
+  color-scheme: dark;
+}
+
+body {
+  font-family: 'Helvena', system-ui, sans-serif;
+  background: var(--ka-ink);
+  color: var(--ka-ash);
+}
+
+/* ── Header ── */
+#header {
+  background: var(--ka-plum);
+  border-bottom: 1px solid var(--ka-border);
+}
+
+#header a:link,
+#header a:visited {
+  color: var(--ka-ash);
+}
+
+#branding h1,
+#site-name {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+#site-name a:link,
+#site-name a:visited {
+  color: var(--ka-ash);
+}
+
+#site-name a:hover,
+#site-name a:focus {
+  color: var(--ka-mist);
+}
+
+.kinpin-admin-view-site {
+  margin-left: 1rem;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.kinpin-admin-view-site:hover,
+.kinpin-admin-view-site:focus {
+  color: var(--ka-crimson);
+  opacity: 1;
+}
+
+#user-tools {
+  font-weight: 500;
+}
+
+#user-tools a:link,
+#user-tools a:visited {
+  border-bottom: none;
+  color: var(--ka-muted);
+}
+
+#user-tools a:hover,
+#user-tools a:focus {
+  color: var(--ka-crimson);
+}
+
+/* ── Breadcrumbs & content chrome ── */
+div.breadcrumbs {
+  background: var(--ka-surface);
+  border-bottom: 1px solid var(--ka-border-soft);
+  color: var(--ka-muted);
+}
+
+div.breadcrumbs a {
+  color: var(--ka-mist);
+}
+
+div.breadcrumbs a:focus,
+div.breadcrumbs a:hover {
+  color: var(--ka-crimson);
+}
+
+#content {
+  padding: 24px 36px 48px;
+}
+
+#content-start .content-centered {
+  background: var(--ka-surface);
+  border: 1px solid var(--ka-border-soft);
+  border-radius: 10px;
+}
+
+#content-main {
+  background: transparent;
+}
+
+body.dashboard #content-main {
+  background: transparent;
+}
+
+/* ── Modules & fieldsets ── */
+.module {
+  background: var(--ka-surface);
+  border: 1px solid var(--ka-border-soft);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.module h2,
+.module caption,
+.inline-group h2 {
+  background: var(--ka-grad);
+  color: var(--ka-ash);
+  font-weight: 600;
+}
+
+.module table {
+  border-color: var(--ka-border-soft);
+}
+
+.module table th {
+  background: var(--ka-elevated);
+  color: var(--ka-mist);
+}
+
+.module table td {
+  border-color: var(--ka-border-soft);
+}
+
+fieldset.module {
+  background: var(--ka-surface);
+  border: 1px solid var(--ka-border-soft);
+  border-radius: 8px;
+}
+
+fieldset.module h2 {
+  border-radius: 0;
+}
+
+fieldset.collapsed {
+  border-color: var(--ka-border-soft);
+}
+
+/* ── Forms ── */
+.form-row label {
+  color: var(--ka-mist);
+}
+
+input:not([type]),
+input[type='text'],
+input[type='password'],
+input[type='email'],
+input[type='url'],
+input[type='number'],
+input[type='tel'],
+input[type='search'],
+textarea,
+select {
+  background: var(--ka-ink);
+  border: 1px solid var(--ka-border-soft);
+  border-radius: 6px;
+  color: var(--ka-ash);
+}
+
+input:not([type]):focus,
+input[type='text']:focus,
+input[type='password']:focus,
+input[type='email']:focus,
+input[type='url']:focus,
+input[type='number']:focus,
+input[type='tel']:focus,
+input[type='search']:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--ka-crimson);
+  outline: 2px solid rgba(221, 28, 73, 0.35);
+  outline-offset: 1px;
+}
+
+.help,
+p.help,
+div.help {
+  color: var(--ka-muted);
+}
+
+/* ── Buttons ── */
+.button,
+input[type='submit'],
+input[type='button'],
+.submit-row input,
+a.button {
+  background: var(--ka-plum);
+  border-radius: 6px;
+  border: 1px solid var(--ka-border);
+  color: var(--ka-ash);
+  font-family: inherit;
+  font-weight: 600;
+}
+
+.button:active,
+input[type='submit']:active,
+input[type='button']:active,
+.button:focus,
+input[type='submit']:focus,
+input[type='button']:focus,
+.button:hover,
+input[type='submit']:hover,
+input[type='button']:hover,
+a.button:hover {
+  background: #3d1a42;
+  border-color: var(--ka-crimson);
+}
+
+.button.default,
+input[type='submit'].default,
+.submit-row input.default {
+  background: var(--ka-crimson);
+  border-color: transparent;
+  color: #fff;
+}
+
+.button.default:active,
+input[type='submit'].default:active,
+.submit-row input.default:active,
+.button.default:focus,
+input[type='submit'].default:focus,
+.submit-row input.default:focus,
+.button.default:hover,
+input[type='submit'].default:hover,
+.submit-row input.default:hover {
+  background: #c41841;
+}
+
+.button[disabled],
+input[type='submit'][disabled],
+input[type='button'][disabled] {
+  opacity: 0.45;
+}
+
+.object-tools a {
+  background: var(--ka-grad);
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.object-tools a:focus,
+.object-tools a:hover {
+  filter: brightness(1.08);
+}
+
+/* ── Changelist ── */
+#changelist {
+  border-color: var(--ka-border-soft);
+}
+
+#changelist #toolbar {
+  background: var(--ka-surface);
+  border-color: var(--ka-border-soft);
+  color: var(--ka-muted);
+}
+
+#changelist .actions {
+  background: var(--ka-elevated);
+  border-color: var(--ka-border-soft);
+}
+
+#changelist table {
+  border-color: var(--ka-border-soft);
+}
+
+#changelist thead th {
+  background: var(--ka-plum);
+  color: var(--ka-ash);
+}
+
+#changelist tbody tr:nth-child(odd) {
+  background: rgba(22, 15, 24, 0.55);
+}
+
+#changelist tbody tr:hover {
+  background: rgba(221, 28, 73, 0.08);
+}
+
+#changelist tbody td,
+#changelist tbody th {
+  border-color: var(--ka-border-soft);
+}
+
+#changelist-filter {
+  background: var(--ka-surface);
+  border: 1px solid var(--ka-border-soft);
+  border-radius: 8px;
+}
+
+#changelist-filter h2 {
+  background: var(--ka-grad);
+  border-radius: 7px 7px 0 0;
+}
+
+#changelist-filter h3 {
+  border-bottom: none;
+  color: var(--ka-muted);
+  font-weight: 600;
+}
+
+#changelist-filter li.selected a {
+  color: var(--ka-crimson);
+  font-weight: 600;
+}
+
+#changelist-filter a {
+  color: var(--ka-mist);
+}
+
+#changelist-filter a:hover {
+  color: var(--ka-crimson);
+}
+
+/* ── Messages ── */
+.messagelist .success {
+  background: rgba(221, 28, 73, 0.18);
+  border: 1px solid rgba(221, 28, 73, 0.45);
+  color: var(--ka-ash);
+}
+
+.messagelist .warning {
+  background: rgba(232, 200, 74, 0.14);
+  border: 1px solid rgba(232, 200, 74, 0.45);
+  color: var(--ka-mist);
+}
+
+.messagelist .error {
+  background: rgba(180, 40, 60, 0.25);
+  border: 1px solid rgba(221, 28, 73, 0.55);
+  color: var(--ka-ash);
+}
+
+/* ── Login ── */
+.login {
+  background: var(--ka-ink);
+}
+
+.login #header {
+  height: auto;
+  padding: 16px 36px;
+}
+
+.login #container {
+  background: transparent;
+}
+
+.login #content {
+  padding: 40px 24px 80px;
+}
+
+.login #content-main {
+  width: 28rem;
+  max-width: 100%;
+  margin: 0 auto;
+  float: none;
+}
+
+.login .form-row label {
+  color: var(--ka-mist);
+}
+
+.login .submit-row {
+  padding: 1rem 0 0;
+}
+
+.login .errornote {
+  background: rgba(180, 40, 60, 0.28);
+  border: 1px solid rgba(221, 28, 73, 0.55);
+  border-radius: 8px;
+  color: var(--ka-ash);
+}
+
+/* ── Inlines & selectors ── */
+.inline-related h3 {
+  background: var(--ka-elevated);
+  border-bottom: 1px solid var(--ka-border-soft);
+  color: var(--ka-mist);
+}
+
+.selector-available,
+.selector-chosen {
+  background: var(--ka-surface);
+  border-color: var(--ka-border-soft);
+}
+
+.selector-available-title,
+.selector-chosen-title {
+  background: var(--ka-plum);
+  border-color: var(--ka-border-soft);
+  color: var(--ka-ash);
+}
+
+.calendarbox,
+.clockbox {
+  background: var(--ka-surface);
+  border: 1px solid var(--ka-border-soft);
+  border-radius: 8px;
+}
+
+.calendar caption {
+  background: var(--ka-plum);
+  color: var(--ka-ash);
+}
+
+.calendar td a {
+  color: var(--ka-mist);
+}
+
+.calendar td.selected a {
+  background: var(--ka-crimson);
+}
+
+/* ── Pagination ── */
+.paginator a:link,
+.paginator a:visited {
+  background: var(--ka-surface);
+  border-color: var(--ka-border-soft);
+  color: var(--ka-mist);
+}
+
+.paginator a:hover,
+.paginator a:focus {
+  background: var(--ka-plum);
+  border-color: var(--ka-border);
+  color: var(--ka-ash);
+}
+
+.paginator .this-page {
+  background: var(--ka-crimson);
+  border-color: transparent;
+  color: #fff;
+}

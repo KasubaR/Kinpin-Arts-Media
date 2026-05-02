@@ -14,6 +14,11 @@ ALLOWED_HOSTS = [
     if h.strip()
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://kinpinarts.com',
+    'https://www.kinpinarts.com',
+]
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',

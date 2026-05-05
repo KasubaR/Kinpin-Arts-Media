@@ -56,6 +56,7 @@
           {% if service.image %}style="--card-bg: url('{{ service.image.url }}'); --reveal-delay: {% widthratio forloop.counter0 1 60 %}ms"{% else %}style="--reveal-delay: {% widthratio forloop.counter0 1 60 %}ms"{% endif %}
         >
           <div class="service-card-bg"></div>
+          <div class="service-card-overlay" aria-hidden="true"></div>
           <div class="relative z-10 p-7 flex flex-col flex-1 justify-between">
             <div>
               <h3 class="font-display font-bold text-white text-lg mb-3">{{ service.title }}</h3>

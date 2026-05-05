@@ -41,28 +41,7 @@
     <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 w-[420px] h-[420px] hero-ring-2 opacity-20 pointer-events-none"></div>
   </section>
 
-  <section id="all-services" class="section-dark py-16">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10">
-
-      <p class="text-white/40 text-xs font-semibold tracking-widest uppercase mb-8 font-body">Jump to a service</p>
-
-      {% if services %}
-      <div class="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-3">
-        {% for service in services %}
-        <a href="#{{ service.slug }}" class="jump-card reveal">
-          <span class="jump-card-label font-body">{{ service.short_description|truncatechars:22 }}</span>
-        </a>
-        {% endfor %}
-      </div>
-      {% else %}
-      <p class="font-body text-white/50">Services coming soon.</p>
-      {% endif %}
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <section class="section-dark py-0">
+  <section id="all-services" class="section-dark py-0">
     <div class="max-w-7xl mx-auto px-6 lg:px-10">
 
       {% for service in services %}

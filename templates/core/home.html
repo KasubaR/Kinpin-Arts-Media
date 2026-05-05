@@ -59,9 +59,6 @@
           <div class="service-card-overlay" aria-hidden="true"></div>
           <div class="relative z-10 p-7 flex flex-col flex-1 justify-between">
             <div>
-              <div class="w-12 h-12 rounded-xl bg-white/15 backdrop-blur-sm border border-white/25 flex items-center justify-center mb-5 text-2xl text-white shadow-sm">
-                {% if service.icon %}{{ service.icon }}{% else %}✦{% endif %}
-              </div>
               <h3 class="font-display font-bold text-white text-lg mb-3">{{ service.title }}</h3>
               <p class="font-body text-white/75 text-sm leading-relaxed mb-5">{{ service.short_description }}</p>
               {% if service.features.exists %}

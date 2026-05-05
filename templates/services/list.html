@@ -50,7 +50,6 @@
       <div class="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-3">
         {% for service in services %}
         <a href="#{{ service.slug }}" class="jump-card reveal">
-          <span class="jump-card-icon">{{ service.icon|default:"✦" }}</span>
           <span class="jump-card-label font-body">{{ service.short_description|truncatechars:22 }}</span>
         </a>
         {% endfor %}
@@ -86,12 +85,9 @@
 
             <div class="service-block-content p-8 lg:p-12 flex flex-col justify-between">
               <div>
-                <div class="flex items-start gap-4 mb-6">
-                  <div class="service-icon-badge">{{ service.icon|default:"✦" }}</div>
-                  <div>
-                    <p class="text-crimson text-xs font-semibold tracking-widest uppercase mb-1 font-body">Creative &amp; Digital</p>
-                    <h2 class="font-display font-bold text-white text-2xl lg:text-3xl leading-tight">{{ service.title }}</h2>
-                  </div>
+                <div class="mb-6">
+                  <p class="text-crimson text-xs font-semibold tracking-widest uppercase mb-1 font-body">Creative &amp; Digital</p>
+                  <h2 class="font-display font-bold text-white text-2xl lg:text-3xl leading-tight">{{ service.title }}</h2>
                 </div>
 
                 <p class="font-body text-white/70 text-sm leading-relaxed mb-6">{{ service.description }}</p>

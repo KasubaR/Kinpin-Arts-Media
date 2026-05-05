@@ -73,13 +73,6 @@
   transform: scale(1.04);
 }
 
-.service-block-img::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(221, 28, 73, 0.22) 0%, rgba(51, 20, 55, 0.5) 100%);
-  pointer-events: none;
-}
 
 .service-icon-badge {
   width: 3.5rem;

@@ -76,10 +76,14 @@
       {% if project.images.all %}
       <div class="mt-14">
         <h3 class="font-display font-bold text-white text-lg mb-6">Gallery</h3>
-        <div class="portfolio-grid">
+        <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
           {% for img in project.images.all %}
-          <figure class="pf-card break-inside-avoid mb-4 overflow-hidden rounded-xl border border-white/10 bg-plum/20">
-            <img src="{{ img.image.url }}" alt="{{ img.caption|default:project.title }}" class="pf-thumb w-full block" style="aspect-ratio: 4/3" loading="lazy" decoding="async" />
+          <figure class="pf-card overflow-hidden rounded-xl border border-white/10 bg-plum/20"
+                  role="button" tabindex="0"
+                  data-gallery-index="{{ forloop.counter0 }}"
+                  data-src="{{ img.image.url }}"
+                  data-caption="{{ img.caption|default:'' }}">
+            <img src="{{ img.image.url }}" alt="{{ img.caption|default:project.title }}" class="pf-thumb w-full block" loading="lazy" decoding="async" />
             {% if img.caption %}
             <figcaption class="font-body text-white/45 text-xs px-3 py-2">{{ img.caption }}</figcaption>
             {% endif %}
@@ -138,4 +142,71 @@
     </div>
   </section>
 
+{% endblock %}
+
+{% block extra_js %}
+<div id="gallery-lightbox" class="lightbox-backdrop" hidden role="dialog" aria-modal="true" aria-label="Gallery image viewer">
+  <div class="lightbox-panel" style="max-width:1000px">
+    <button type="button" class="lightbox-close" id="gl-close" aria-label="Close">✕</button>
+    <button type="button" class="lb-nav-btn lb-prev" id="gl-prev" hidden aria-label="Previous">‹</button>
+    <button type="button" class="lb-nav-btn lb-next" id="gl-next" hidden aria-label="Next">›</button>
+    <div class="lb-img-wrap" style="max-height:75vh">
+      <img id="gl-img" src="" alt="" style="width:100%;height:100%;object-fit:contain;max-height:75vh;display:block" />
+    </div>
+    <div class="p-5 text-center">
+      <p id="gl-caption" class="font-body text-white/60 text-sm"></p>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var figures = Array.from(document.querySelectorAll('[data-gallery-index]'));
+  if (!figures.length) return;
+  var backdrop = document.getElementById('gallery-lightbox');
+  var glImg = document.getElementById('gl-img');
+  var glCaption = document.getElementById('gl-caption');
+  var glClose = document.getElementById('gl-close');
+  var glPrev = document.getElementById('gl-prev');
+  var glNext = document.getElementById('gl-next');
+  var current = 0;
+  var multi = figures.length > 1;
+
+  function open(index) {
+    current = index;
+    var fig = figures[current];
+    glImg.src = fig.getAttribute('data-src');
+    glImg.alt = fig.getAttribute('data-caption') || '';
+    glCaption.textContent = fig.getAttribute('data-caption') || '';
+    if (multi) { glPrev.hidden = false; glNext.hidden = false; }
+    backdrop.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    backdrop.hidden = true;
+    document.body.style.overflow = '';
+    glImg.src = '';
+  }
+
+  function step(delta) {
+    open((current + delta + figures.length) % figures.length);
+  }
+
+  figures.forEach(function (fig) {
+    fig.addEventListener('click', function () { open(parseInt(fig.getAttribute('data-gallery-index'))); });
+    fig.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') open(parseInt(fig.getAttribute('data-gallery-index'))); });
+  });
+
+  glClose.addEventListener('click', close);
+  glPrev.addEventListener('click', function () { step(-1); });
+  glNext.addEventListener('click', function () { step(1); });
+  backdrop.addEventListener('click', function (e) { if (e.target === backdrop) close(); });
+  document.addEventListener('keydown', function (e) {
+    if (backdrop.hidden) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowRight') step(1);
+    if (e.key === 'ArrowLeft') step(-1);
+  });
+})();
+</script>
 {% endblock %}

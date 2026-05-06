@@ -289,8 +289,9 @@
   border: 1px solid rgba(221, 28, 73, 0.2);
   border-radius: 1.5rem;
   max-width: 900px;
+  max-height: calc(100vh - 2rem);
   width: 100%;
-  overflow: hidden;
+  overflow-y: auto;
   animation: pf-lb-in 0.35s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
@@ -380,6 +381,10 @@
   object-fit: cover;
   display: block;
   max-height: 520px;
+}
+
+.lb-img-wrap img[hidden] {
+  display: none;
 }
 
 .lb-video-wrap {

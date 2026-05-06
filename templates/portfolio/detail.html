@@ -44,7 +44,20 @@
   <section class="section-dark py-12 lg:py-16">
     <div class="max-w-7xl mx-auto px-6 lg:px-10">
       <div class="rounded-2xl overflow-hidden border border-white/10 mb-12">
+        {% if project.youtube_embed_url %}
+        <div class="relative w-full" style="aspect-ratio: 16/9">
+          <iframe
+            src="{{ project.youtube_embed_url }}"
+            title="{{ project.title }}"
+            class="absolute inset-0 w-full h-full border-0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+        {% else %}
         <img src="{{ project.thumbnail.url }}" alt="{{ project.title }}" class="w-full max-h-[520px] object-cover block" />
+        {% endif %}
       </div>
       <div class="max-w-3xl">
         <h2 class="font-display font-bold text-white text-xl mb-4">About this project</h2>
@@ -97,7 +110,7 @@
       <h2 class="font-display font-bold text-white text-xl mb-8">Related projects</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {% for p in related %}
-        <a href="{% url 'portfolio_detail' p.slug }}" class="pf-card no-underline">
+        <a href="{% url 'portfolio_detail' p.slug %}" class="pf-card no-underline">
           <div class="overflow-hidden">
             <img src="{{ p.thumbnail.url }}" alt="{{ p.title }}" class="pf-thumb" style="aspect-ratio: 4/3" loading="lazy" decoding="async" />
           </div>

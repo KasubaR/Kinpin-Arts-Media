@@ -26,4 +26,6 @@ class ServiceFeature(models.Model):
         ordering = ['order']
 
     def __str__(self):
-        return f"{self.service.title} — {self.text}"
+        service_title = getattr(self.service, 'title', None) if self.service_id else 'Unsaved service'
+        feature_text = self.text or 'Untitled feature'
+        return f"{service_title} - {feature_text}"

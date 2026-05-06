@@ -28,6 +28,8 @@
 
     var backdrop = document.getElementById('portfolio-lightbox');
     var lbImg = document.getElementById('lb-img');
+    var lbVideoWrap = document.getElementById('lb-video-wrap');
+    var lbVideo = document.getElementById('lb-video');
     var lbTitle = document.getElementById('lb-title');
     var lbDesc = document.getElementById('lb-desc');
     var lbTags = document.getElementById('lb-tags');
@@ -122,11 +124,8 @@
       filteredSlugs.forEach(function (slug, i) {
         var dot = document.createElement('button');
         dot.type = 'button';
-        dot.className = 'transition-all duration-200 rounded-full';
-        dot.style.height = '0.4rem';
-        dot.style.width = i === activeIndex ? '1.5rem' : '0.4rem';
-        dot.style.background =
-          i === activeIndex ? '#dd1c49' : 'rgba(255,255,255,0.2)';
+        dot.className = 'lb-dot';
+        if (i === activeIndex) dot.classList.add('is-active');
         dot.setAttribute('aria-label', 'Go to project ' + (i + 1));
         dot.addEventListener('click', function () {
           activeIndex = i;
@@ -138,10 +137,34 @@
       });
     }
 
-    function renderLightboxItem(item) {
-      if (!item) return;
+    function resetVideo() {
+      if (!lbVideo) return;
+      lbVideo.src = '';
+    }
+
+    function renderLightboxMedia(item) {
+      var isYoutube = item.media_type === 'youtube' && item.video_embed_url;
+      if (!lbImg || !lbVideoWrap || !lbVideo) return;
+
+      if (isYoutube) {
+        lbVideo.src = item.video_embed_url;
+        lbVideoWrap.hidden = false;
+        lbImg.hidden = true;
+        lbImg.removeAttribute('src');
+        lbImg.alt = '';
+        return;
+      }
+
+      resetVideo();
+      lbVideoWrap.hidden = true;
+      lbImg.hidden = false;
       lbImg.src = item.image;
       lbImg.alt = item.title;
+    }
+
+    function renderLightboxItem(item) {
+      if (!item) return;
+      renderLightboxMedia(item);
       lbTitle.textContent = item.title;
       lbDesc.textContent = item.description || '';
 
@@ -176,10 +199,7 @@
         lbTags.appendChild(span);
       });
       var yearSpan = document.createElement('span');
-      yearSpan.className = 'cat-tag';
-      yearSpan.style.color = 'rgba(245,240,246,0.5)';
-      yearSpan.style.background = 'rgba(255,255,255,0.06)';
-      yearSpan.style.borderColor = 'rgba(255,255,255,0.1)';
+      yearSpan.className = 'cat-tag lb-year-tag';
       yearSpan.textContent = String(item.year);
       lbTags.appendChild(yearSpan);
 
@@ -190,6 +210,7 @@
 
     function closeLightbox() {
       if (!backdrop) return;
+      resetVideo();
       backdrop.hidden = true;
       document.body.style.overflow = '';
       lightboxOpen = false;

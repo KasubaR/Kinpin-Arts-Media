@@ -27,3 +27,37 @@ class ProjectAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     filter_horizontal = ('categories',)
     inlines = [ProjectScopeItemInline, ProjectImageInline]
+    fieldsets = (
+        (
+            'Project basics',
+            {
+                'fields': (
+                    'title',
+                    'slug',
+                    'categories',
+                    'client',
+                    'description',
+                    'thumbnail',
+                ),
+            },
+        ),
+        (
+            'Project links',
+            {
+                'fields': (
+                    'behance_url',
+                    'youtube_url',
+                ),
+                'description': 'Add a YouTube URL when this project should play as video in the portfolio lightbox.',
+            },
+        ),
+        (
+            'Visibility',
+            {
+                'fields': (
+                    'is_featured',
+                    'order',
+                ),
+            },
+        ),
+    )

@@ -1,3 +1,6 @@
+from urllib.parse import parse_qs, urlparse
+
+from django.core.exceptions import ValidationError
 from django.db import models
 
 
@@ -25,6 +28,11 @@ class Project(models.Model):
         blank=True,
         help_text='Optional link to this project on Behance. Falls back to the agency Behance profile when empty.',
     )
+    youtube_url = models.URLField(
+        max_length=500,
+        blank=True,
+        help_text='Optional YouTube URL for video projects (youtube.com or youtu.be).',
+    )
     is_featured = models.BooleanField(default=False)
     order = models.PositiveSmallIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -34,6 +42,52 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def youtube_video_id(self):
+        raw_url = (self.youtube_url or '').strip()
+        if not raw_url:
+            return ''
+        try:
+            parsed = urlparse(raw_url)
+        except ValueError:
+            return ''
+
+        host = parsed.netloc.lower()
+        if host.startswith('www.'):
+            host = host[4:]
+        if host.startswith('m.'):
+            host = host[2:]
+
+        if host == 'youtu.be':
+            return parsed.path.strip('/').split('/')[0]
+        if host in {'youtube.com', 'music.youtube.com'}:
+            if parsed.path == '/watch':
+                return parse_qs(parsed.query).get('v', [''])[0]
+            if parsed.path.startswith('/embed/'):
+                return parsed.path.split('/embed/', 1)[1].split('/')[0]
+            if parsed.path.startswith('/shorts/'):
+                return parsed.path.split('/shorts/', 1)[1].split('/')[0]
+        return ''
+
+    @property
+    def youtube_embed_url(self):
+        video_id = self.youtube_video_id
+        if not video_id:
+            return ''
+        return f'https://www.youtube.com/embed/{video_id}?rel=0'
+
+    def clean(self):
+        super().clean()
+        raw_url = (self.youtube_url or '').strip()
+        if not raw_url:
+            return
+
+        video_id = self.youtube_video_id
+        if not video_id:
+            raise ValidationError({
+                'youtube_url': 'Enter a valid YouTube video URL (youtube.com/watch, youtube.com/embed, youtube.com/shorts, or youtu.be).',
+            })
 
 
 class ProjectScopeItem(models.Model):

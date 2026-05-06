@@ -382,11 +382,48 @@
   max-height: 520px;
 }
 
+.lb-video-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.lb-video-wrap[hidden] {
+  display: none;
+}
+
+.lb-video {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
 .lb-img-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(to top, rgba(26, 11, 32, 1) 0%, transparent 40%);
   pointer-events: none;
+}
+
+.lb-dot {
+  height: 0.4rem;
+  width: 0.4rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 0;
+  transition: all 0.2s ease;
+}
+
+.lb-dot.is-active {
+  width: 1.5rem;
+  background: #dd1c49;
+}
+
+.lb-year-tag {
+  color: rgba(245, 240, 246, 0.5);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .pf-card.is-filtered-out {

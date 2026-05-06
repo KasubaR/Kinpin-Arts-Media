@@ -40,6 +40,8 @@ def portfolio_list(request):
     payload = []
     for p in projects:
         behance = (p.behance_url or '').strip()
+        video_embed_url = p.youtube_embed_url
+        has_video = bool(video_embed_url)
         payload.append({
             'slug': p.slug,
             'title': p.title,
@@ -47,6 +49,8 @@ def portfolio_list(request):
             'categories': [c.name for c in p.categories.all()],
             'featured': p.is_featured,
             'image': p.thumbnail.url,
+            'media_type': 'youtube' if has_video else 'image',
+            'video_embed_url': video_embed_url,
             'description': p.description,
             'detail_url': reverse('portfolio_detail', kwargs={'slug': p.slug}),
             'behance_url': behance,

@@ -19,9 +19,25 @@ class ContactInquiry(models.Model):
 
 
 class NewsletterSubscriber(models.Model):
+    SYNC_PENDING = 'pending'
+    SYNC_SYNCED = 'synced'
+    SYNC_ALREADY_SYNCED = 'already_synced'
+    SYNC_CONTACT_LIMIT = 'contact_limit'
+    SYNC_FAILED = 'failed'
+    SYNC_STATUS_CHOICES = [
+        (SYNC_PENDING, 'Pending'),
+        (SYNC_SYNCED, 'Synced'),
+        (SYNC_ALREADY_SYNCED, 'Already Synced'),
+        (SYNC_CONTACT_LIMIT, 'Contact Limit'),
+        (SYNC_FAILED, 'Failed'),
+    ]
+
     email = models.EmailField(unique=True)
     subscribed_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
+    sync_status = models.CharField(max_length=20, choices=SYNC_STATUS_CHOICES, default=SYNC_PENDING)
+    sync_last_attempt_at = models.DateTimeField(blank=True, null=True)
+    sync_error_message = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
         return self.email

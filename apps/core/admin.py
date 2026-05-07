@@ -13,9 +13,10 @@ class ContactInquiryAdmin(admin.ModelAdmin):
 
 @admin.register(NewsletterSubscriber)
 class NewsletterSubscriberAdmin(admin.ModelAdmin):
-    list_display = ('email', 'subscribed_at', 'is_active')
-    list_filter = ('is_active',)
+    list_display = ('email', 'subscribed_at', 'is_active', 'sync_status', 'sync_last_attempt_at')
+    list_filter = ('is_active', 'sync_status')
     search_fields = ('email',)
+    readonly_fields = ('sync_last_attempt_at',)
 
 
 @admin.register(Testimonial)

@@ -2,6 +2,7 @@
 Shared Django settings for KinpinArts.
 """
 
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -76,3 +77,14 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MAILCHIMP_API_KEY = os.environ.get('MAILCHIMP_API_KEY', '').strip()
+MAILCHIMP_AUDIENCE_ID = os.environ.get('MAILCHIMP_AUDIENCE_ID', '').strip()
+MAILCHIMP_SERVER_PREFIX = os.environ.get('MAILCHIMP_SERVER_PREFIX', '').strip()
+MAILCHIMP_DOUBLE_OPTIN = os.environ.get('MAILCHIMP_DOUBLE_OPTIN', 'true').strip().lower() in {
+    '1',
+    'true',
+    'yes',
+    'on',
+}
+MAILCHIMP_ENABLED = all([MAILCHIMP_API_KEY, MAILCHIMP_AUDIENCE_ID, MAILCHIMP_SERVER_PREFIX])

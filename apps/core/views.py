@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.db.models import Prefetch
+from django.utils import timezone
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
@@ -11,6 +12,7 @@ from apps.portfolio.models import Project
 from apps.services.models import Service, ServiceFeature
 
 from .models import ClientLogo, ContactInquiry, NewsletterSubscriber, Testimonial
+from .services.mailchimp import subscribe_email
 from .site_content import OFFICE_LOCATIONS
 
 PROCESS_STEPS = [
@@ -308,10 +310,34 @@ def newsletter_subscribe(request):
     if request.method == 'POST':
         email = request.POST.get('email', '').strip()
         if email:
-            _, created = NewsletterSubscriber.objects.get_or_create(email=email)
+            subscriber, created = NewsletterSubscriber.objects.get_or_create(email=email)
             if created:
-                messages.success(request, 'You are now subscribed!')
+                messages.success(request, 'You are subscribed. Please check your inbox to confirm.')
             else:
                 messages.info(request, 'You are already subscribed.')
+
+            if settings.MAILCHIMP_ENABLED:
+                result = subscribe_email(
+                    email=email,
+                    api_key=settings.MAILCHIMP_API_KEY,
+                    audience_id=settings.MAILCHIMP_AUDIENCE_ID,
+                    server_prefix=settings.MAILCHIMP_SERVER_PREFIX,
+                    double_optin=settings.MAILCHIMP_DOUBLE_OPTIN,
+                )
+                subscriber.sync_last_attempt_at = timezone.now()
+                subscriber.sync_status = result.status
+                subscriber.sync_error_message = result.message[:255]
+                subscriber.save(update_fields=['sync_last_attempt_at', 'sync_status', 'sync_error_message'])
+
+                if result.status == NewsletterSubscriber.SYNC_CONTACT_LIMIT:
+                    messages.info(
+                        request,
+                        'Thanks. You are saved on our waitlist while we clear mailing list capacity.',
+                    )
+                elif not result.success:
+                    messages.info(
+                        request,
+                        'Thanks. Your email is saved and we will complete newsletter signup shortly.',
+                    )
         return redirect(request.META.get('HTTP_REFERER', 'home'))
     return redirect('home')

@@ -198,7 +198,13 @@
                   <p class="text-white text-sm font-medium font-body leading-snug">{{ line }}</p>
                   {% endfor %}
                 {% else %}
+                  {% if item.href %}
+                  <p class="text-white text-sm font-medium font-body">
+                    <a href="{{ item.href }}" target="_blank" rel="noopener noreferrer" class="underline decoration-white/40 hover:decoration-white">{{ item.value }}</a>
+                  </p>
+                  {% else %}
                   <p class="text-white text-sm font-medium font-body">{{ item.value }}</p>
+                  {% endif %}
                 {% endif %}
               </div>
             </div>

@@ -60,6 +60,20 @@ class Testimonial(models.Model):
         return f"{self.client_name} ({self.client_company})"
 
 
+class TeamMember(models.Model):
+    name = models.CharField(max_length=100)
+    role = models.CharField(max_length=150)
+    photo = models.ImageField(upload_to='team/')
+    bio = models.TextField(blank=True)
+    order = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order', 'name']
+
+    def __str__(self):
+        return f"{self.name} — {self.role}"
+
+
 class ClientLogo(models.Model):
     name = models.CharField(max_length=100)
     logo = models.ImageField(upload_to='clients/')

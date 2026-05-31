@@ -11,7 +11,7 @@ from django.urls import reverse
 from apps.portfolio.models import Project
 from apps.services.models import Service, ServiceFeature
 
-from .models import ClientLogo, ContactInquiry, NewsletterSubscriber, Testimonial
+from .models import ClientLogo, ContactInquiry, NewsletterSubscriber, TeamMember, Testimonial
 from .services.mailchimp import subscribe_email
 from .site_content import OFFICE_LOCATIONS
 
@@ -239,6 +239,8 @@ def home(request):
             category_names.add(c.name)
     portfolio_tabs = ['All'] + sorted(category_names, key=str.lower)
 
+    client_logos = list(ClientLogo.objects.order_by('order', 'name'))
+
     context = {
         'nav_links': _nav_links(),
         'social_links': SOCIAL_LINKS,
@@ -251,6 +253,7 @@ def home(request):
         'stats': _get_stats(),
         'testimonial_cards': _testimonial_cards(),
         'office_locations': OFFICE_LOCATIONS,
+        'client_logos': client_logos,
     }
     return render(request, 'core/home.html', context)
 
@@ -264,6 +267,11 @@ def about(request):
 
     services = Service.objects.order_by('order', 'title')
 
+    team_members = [
+        {'name': m.name, 'role': m.role, 'bio': m.bio, 'photo': m.photo.url}
+        for m in TeamMember.objects.all()
+    ]
+
     return render(request, 'core/about.html', {
         'nav_links': _nav_links(),
         'social_links': SOCIAL_LINKS,
@@ -273,7 +281,7 @@ def about(request):
         'milestones': ABOUT_MILESTONES,
         'values': ABOUT_VALUES,
         'credentials': ABOUT_CREDENTIALS,
-        'team_members': ABOUT_TEAM,
+        'team_members': team_members,
         'client_pills': client_names,
     })
 

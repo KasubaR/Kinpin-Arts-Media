@@ -1,3 +1,4 @@
+from django.core.validators import FileExtensionValidator
 from django.db import models
 
 
@@ -76,7 +77,10 @@ class TeamMember(models.Model):
 
 class ClientLogo(models.Model):
     name = models.CharField(max_length=100)
-    logo = models.ImageField(upload_to='clients/')
+    logo = models.FileField(
+        upload_to='clients/',
+        validators=[FileExtensionValidator(allowed_extensions=['svg', 'png', 'jpg', 'jpeg', 'webp'])],
+    )
     website = models.URLField(blank=True)
     order = models.PositiveSmallIntegerField(default=0)
 
